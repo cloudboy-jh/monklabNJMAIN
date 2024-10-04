@@ -76,3 +76,27 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Add these styles at the end of your globals.css file */
+
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #ef4444;
+  --rdp-background-color: #ef4444;
+  --rdp-accent-color-dark: #dc2626;
+  --rdp-background-color-dark: #dc2626;
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  --rdp-outline-selected: 3px solid var(--rdp-accent-color);
+  --rdp-selected-color: #fff;
+}
+
+.rdp-day_selected, 
+.rdp-day_selected:focus-visible, 
+.rdp-day_selected:hover {
+  background-color: var(--rdp-accent-color);
+  color: var(--rdp-selected-color);
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: #f87171;
+}

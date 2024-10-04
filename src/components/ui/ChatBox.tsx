@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
+import SimpleSheet from './simple-sheet';
 
 type Message = {
   text: string;
@@ -23,6 +24,8 @@ const ChatBox: React.FC = () => {
     role: "system",
     content: "You are an AI assistant for MonkLab, a web app that helps users build software projects. Provide expert guidance on tech stacks, including front-end, back-end, databases, and deployment. Offer concise, practical advice on coding best practices and tools, tailored to the user's needs. Keep a professional, supportive, and informative tone."
   };
+
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputMessage(e.target.value);
@@ -77,6 +80,12 @@ const ChatBox: React.FC = () => {
     }
   };
 
+  const handleRestartChat = () => {
+    setMessages([]);
+    setInputMessage('');
+    setError(null);
+  };
+
   const chatMessagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -99,6 +108,11 @@ const ChatBox: React.FC = () => {
 
   return (
     <div className="flex flex-col flex-1 max-h-[800px] min-h-[800px] bg-zinc-800 p-4 w-full max-w-4xl rounded-2xl overflow-hidden shadow-lg">
+      <SimpleSheet 
+        isOpen={isSheetOpen} 
+        onOpenChange={setIsSheetOpen} 
+        onRestartChat={handleRestartChat}
+      />
       <div className="flex-1 overflow-y-auto p-4 pb-[70px]">
         {messages.map((message, index) => (
           <div
