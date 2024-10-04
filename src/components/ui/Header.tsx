@@ -23,7 +23,7 @@ const Header: React.FC = () => {
         <img 
           src={monkLogo.src} 
           alt="Monk Logo" 
-          className="w-24 h-24" // Logo size remains the same
+          className="w-32 h-32" // Logo size remains the same
         />
       </div>
       <nav className="flex space-x-8">
