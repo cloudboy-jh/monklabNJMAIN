@@ -3,10 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/ui/Header';
 import { Progress } from '@/components/ui/Progress';
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 
 function BuildPage() {
   const [stackItems, setStackItems] = useState<string[]>([]);
   const [progress, setProgress] = useState<number>(0);
+  const { theme } = useTheme();
 
   useEffect(() => {
     loadTechStack();
@@ -41,31 +44,37 @@ function BuildPage() {
     });
   }
 
+  const isDarkMode = theme === 'dark';
+
   return (
-    <div className="w-full h-screen flex flex-col bg-zinc-900">
+    <div className={`w-full h-screen flex flex-col ${isDarkMode ? 'bg-zinc-900' : 'bg-gray-100'}`}>
       <Header />
       <main className="flex flex-col items-center justify-start p-6 mt-10">
-        <h1 className="text-3xl font-bold mb-6 text-white">Build Your Project</h1>
-        <div className="card w-full max-w-lg mb-6 p-4 bg-zinc-800 rounded-md">
-          <h2 className="text-2xl font-semibold mb-3 text-white">Build Progress</h2>
+        <h1 className={`text-3xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Build Your Project</h1>
+        <div className={`card w-full max-w-lg mb-6 p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`}>
+          <h2 className={`text-2xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Build Progress</h2>
           <Progress value={progress} className="w-full" />
-          <p className="mt-2 text-white">Progress: {progress}%</p>
+          <p className={`mt-2 ${isDarkMode ? 'text-white' : 'text-gray-700'}`}>Progress: {progress}%</p>
         </div>
-        <div className="card w-full max-w-lg mb-6 p-4 bg-zinc-800 rounded-md">
-          <h2 className="text-2xl font-semibold mb-3 text-white">Tech Stack</h2>
-          <ul id="stack-list" className="text-white">
+        <div className={`card w-full max-w-lg mb-6 p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`}>
+          <h2 className={`text-2xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Tech Stack</h2>
+          <ul id="stack-list" className={isDarkMode ? 'text-white' : 'text-gray-700'}>
             {stackItems.map((item, index) => (
               <li key={index} className="stack-item">{item}</li>
             ))}
           </ul>
         </div>
-        <div className="card w-full max-w-lg mb-6 p-4 bg-zinc-800 rounded-md">
-          <h2 className="text-2xl font-semibold mb-3 text-white">Build Configuration</h2>
-          <p className="text-white">Customize your project settings and dependencies here.</p>
+        <div className={`card w-full max-w-lg mb-6 p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`}>
+          <h2 className={`text-2xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Build Configuration</h2>
+          <p className={isDarkMode ? 'text-white' : 'text-gray-700'}>Customize your project settings and dependencies here.</p>
         </div>
-        <button className="nav-button nav-button-large">
-          <span className="nav-text-large text-white">Start Building</span>
-        </button>
+        <Button 
+          variant="destructive" 
+          size="lg" 
+          className="mt-4"
+        >
+          Start Building
+        </Button>
       </main>
     </div>
   );

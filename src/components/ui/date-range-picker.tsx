@@ -4,6 +4,7 @@ import * as React from "react"
 import { addDays, format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
+import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -16,11 +17,35 @@ import {
 
 export function DatePickerWithRange({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+  theme = 'default',
+}: React.HTMLAttributes<HTMLDivElement> & { theme?: 'default' | 'red' | 'blue' | 'green' }) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
   })
+  const { resolvedTheme } = useTheme()
+  const isDarkMode = resolvedTheme === 'dark'
+
+  const themeStyles = {
+    default: isDarkMode ? 'bg-zinc-800 text-white hover:bg-zinc-700' : 'bg-red-500 text-white hover:bg-red-600',
+    red: 'bg-red-500 text-white hover:bg-red-600',
+    blue: 'bg-blue-500 text-white hover:bg-blue-600',
+    green: 'bg-green-500 text-white hover:bg-green-600',
+  }
+
+  const calendarThemeStyles = {
+    default: isDarkMode ? 'bg-zinc-800 text-white' : 'bg-red-500 text-white',
+    red: 'bg-red-500 text-white',
+    blue: 'bg-blue-500 text-white',
+    green: 'bg-green-500 text-white',
+  }
+
+  const displayThemeStyles = {
+    default: isDarkMode ? 'bg-zinc-900 text-zinc-100' : 'bg-red-100 text-red-900',
+    red: 'bg-red-100 text-red-900',
+    blue: 'bg-blue-100 text-blue-900',
+    green: 'bg-green-100 text-green-900',
+  }
 
   return (
     <div className={cn("flex flex-col h-full", className)}>
@@ -30,8 +55,9 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal bg-red-500 text-white hover:bg-red-600",
-              !date && "text-red-200"
+              "w-full justify-start text-left font-normal",
+              themeStyles[theme],
+              !date && `text-${theme === 'default' ? (isDarkMode ? 'zinc' : 'red') : theme}-200`
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -49,7 +75,7 @@ export function DatePickerWithRange({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 bg-red-500" align="start">
+        <PopoverContent className={`w-auto p-0 ${calendarThemeStyles[theme]}`} align="start">
           <Calendar
             initialFocus
             mode="range"
@@ -57,11 +83,14 @@ export function DatePickerWithRange({
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
-            className="bg-red-500 text-white"
+            className={calendarThemeStyles[theme]}
           />
         </PopoverContent>
       </Popover>
-      <div className="flex-1 mt-4 overflow-y-auto bg-zinc-900 text-white p-4 rounded-lg text-center">
+      <div className={cn(
+        "flex-1 mt-4 overflow-y-auto p-4 rounded-lg text-center",
+        displayThemeStyles[theme]
+      )}>
         <p className="font-semibold mb-2">Selected date range:</p>
         <p>{date?.from ? format(date.from, "PP") : "Start date"}</p>
         <p className="mt-1">{date?.to ? format(date.to, "PP") : "End date"}</p>

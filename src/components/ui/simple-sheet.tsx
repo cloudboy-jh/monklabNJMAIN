@@ -12,34 +12,40 @@ interface SimpleSheetProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onRestartChat: () => void;
+  theme: 'light' | 'dark';
 }
 
-export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat }: SimpleSheetProps) {
+export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat, theme }: SimpleSheetProps) {
+  const bgColor = theme === 'dark' ? 'bg-zinc-800' : 'bg-white';
+  const textColor = 'text-red-500';
+  const hoverBgColor = theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-gray-100';
+  const borderColor = theme === 'dark' ? 'border-zinc-700' : 'border-gray-200';
+
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent side="left" className="bg-[#1c1c1e] text-red-500 border-r border-gray-700">
-        <h2 className="text-lg font-semibold mb-4 text-red-500">Menu</h2>
+      <SheetContent side="left" className={`${bgColor} ${textColor} border-r ${borderColor}`}>
+        <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Menu</h2>
         <div className="flex flex-col gap-4">
-          <Button asChild variant="ghost" className="justify-start hover:bg-gray-800">
+          <Button asChild variant="ghost" className={`justify-start ${hoverBgColor}`}>
             <Link href="/">
-              <Home className="mr-2 h-4 w-4 text-red-500" />
-              <span className="text-red-500">Home</span>
+              <Home className={`mr-2 h-4 w-4 ${textColor}`} />
+              <span className={textColor}>Home</span>
             </Link>
           </Button>
           <Button 
             variant="ghost" 
-            className="justify-start hover:bg-gray-800"
+            className={`justify-start ${hoverBgColor}`}
             onClick={() => {
               onRestartChat();
               onOpenChange(false);
             }}
           >
-            <RefreshCw className="mr-2 h-4 w-4 text-red-500" />
-            <span className="text-red-500">Restart Chat</span>
+            <RefreshCw className={`mr-2 h-4 w-4 ${textColor}`} />
+            <span className={textColor}>Restart Chat</span>
           </Button>
-          <Button variant="ghost" className="justify-start hover:bg-gray-800">
-            <Settings className="mr-2 h-4 w-4 text-red-500" />
-            <span className="text-red-500">Settings</span>
+          <Button variant="ghost" className={`justify-start ${hoverBgColor}`}>
+            <Settings className={`mr-2 h-4 w-4 ${textColor}`} />
+            <span className={textColor}>Settings</span>
           </Button>
         </div>
       </SheetContent>

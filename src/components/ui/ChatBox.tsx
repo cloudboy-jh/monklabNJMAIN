@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
 import SimpleSheet from './simple-sheet';
+import { useTheme } from 'next-themes'; // Ensure this is correct
 
 type Message = {
   text: string;
@@ -10,6 +11,7 @@ type Message = {
 };
 
 const ChatBox: React.FC = () => {
+  const { theme } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -107,7 +109,7 @@ const ChatBox: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col flex-1 max-h-[800px] min-h-[800px] bg-zinc-800 p-4 w-full max-w-4xl rounded-2xl overflow-hidden shadow-lg">
+    <div className={`flex flex-col flex-1 max-h-[800px] min-h-[800px] p-4 w-full max-w-4xl rounded-2xl overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white'}`}>
       <SimpleSheet 
         isOpen={isSheetOpen} 
         onOpenChange={setIsSheetOpen} 
@@ -119,33 +121,47 @@ const ChatBox: React.FC = () => {
             key={index}
             className={`flex mb-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <div className={`max-w-[70%] p-3 rounded-lg break-words ${message.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-black'}`}>
+            <div className={`max-w-[70%] p-3 rounded-lg break-words ${
+              message.sender === 'user' 
+                ? 'bg-blue-600 text-white' 
+                : theme === 'dark' 
+                  ? 'bg-gray-700 text-white' 
+                  : 'bg-gray-200 text-black'
+            }`}>
               {message.text.startsWith('```') ? renderCodeBlock(message.text.replace(/```/g, '')) : message.text}
             </div>
           </div>
         ))}
         {isLoading && (
           <div className="flex justify-start mb-3">
-            <div className="max-w-[70%] p-3 rounded-lg bg-gray-200 text-black">
+            <div className={`max-w-[70%] p-3 rounded-lg ${
+              theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'
+            }`}>
               Typing...
             </div>
           </div>
         )}
         {error && <div className="text-red-600 text-center mt-2">{error}</div>}
       </div>
-      <form onSubmit={handleSendMessage} className="flex items-center p-4 bg-zinc-900 rounded-full overflow-hidden shadow-md">
+      <form onSubmit={handleSendMessage} className={`flex items-center p-4 rounded-full overflow-hidden shadow-md ${
+        theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100'
+      }`}>
         <input
           type="text"
           value={inputMessage}
           onChange={handleInputChange}
           placeholder="Message MonkLab"
           disabled={isLoading}
-          className="flex-grow bg-transparent border-none text-white p-3 text-base outline-none placeholder-gray-500"
+          className={`flex-grow bg-transparent border-none p-3 text-base outline-none ${
+            theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
+          }`}
         />
         <button
           type="submit"
           disabled={isLoading || inputMessage.trim() === ''}
-          className="bg-transparent text-red-500 border-none px-4 text-2xl cursor-pointer hover:bg-white/[.1] disabled:bg-transparent disabled:cursor-not-allowed"
+          className={`bg-transparent text-red-500 border-none px-4 text-2xl cursor-pointer hover:bg-white/[.1] disabled:bg-transparent disabled:cursor-not-allowed ${
+            theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
+          }`}
         >
           {isLoading ? '...' : '↑'}
         </button>
