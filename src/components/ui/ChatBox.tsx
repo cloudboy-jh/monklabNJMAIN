@@ -11,7 +11,8 @@ type Message = {
 };
 
 const ChatBox: React.FC = () => {
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -90,13 +91,17 @@ const ChatBox: React.FC = () => {
   const chatMessagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    setMounted(true);
+    if (theme === 'system') {
+      setTheme('dark');
+    }
     if (messages.length > 0 && messages[messages.length - 1].sender === 'user') {
       chatMessagesRef.current?.scrollTo({
         top: chatMessagesRef.current.scrollHeight,
         behavior: "smooth"
       });
     }
-  }, [messages]);
+  }, [theme]);
 
   // Function to render code if the bot generates it
   const renderCodeBlock = (code: string) => {
@@ -107,9 +112,13 @@ const ChatBox: React.FC = () => {
     );
   };
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div 
-      className={`flex flex-col flex-1 rounded-2xl overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white'}`}
+      className={`flex flex-col flex-1 rounded-2xl overflow-hidden shadow-lg ${theme === 'light' ? 'bg-white' : 'bg-zinc-800'}`}
       style={{ height: '800px', maxWidth: '1200px', width: '100%' }}
     >
       <SimpleSheet 

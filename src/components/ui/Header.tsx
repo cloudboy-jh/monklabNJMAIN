@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from "./button";
@@ -19,16 +19,28 @@ import { useTheme } from "next-themes";
 const Header: React.FC = () => {
   const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (theme === 'system') {
+      setTheme('dark');
+    }
+  }, []);
 
   const handleLogoClick = () => {
     setIsSheetOpen(true);
   };
 
-  const buttonThemeClass = theme === 'dark' ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-gray-200 hover:bg-gray-300';
+  const buttonThemeClass = theme === 'light' ? 'bg-gray-200 hover:bg-gray-300' : 'bg-zinc-800 hover:bg-zinc-700';
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <header className={`w-full py-4 relative ${theme === 'dark' ? 'bg-zinc-900 text-white' : 'bg-white text-gray-900'}`}>
+    <header className={`w-full py-4 relative ${theme === 'light' ? 'bg-white text-gray-900' : 'bg-zinc-900 text-white'}`}>
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
