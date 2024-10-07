@@ -17,7 +17,7 @@ interface SimpleSheetProps {
 
 export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat, theme }: SimpleSheetProps) {
   const bgColor = theme === 'dark' ? 'bg-zinc-800' : 'bg-white';
-  const textColor = 'text-red-500';
+  const textColor = theme === 'dark' ? 'text-white' : 'text-black';
   const hoverBgColor = theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-gray-100';
   const borderColor = theme === 'dark' ? 'border-zinc-700' : 'border-gray-200';
 
@@ -29,7 +29,7 @@ export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat, theme
           <Button asChild variant="ghost" className={`justify-start ${hoverBgColor}`}>
             <Link href="/">
               <Home className={`mr-2 h-4 w-4 ${textColor}`} />
-              <span className={textColor}>Home</span>
+              <span>Home</span>
             </Link>
           </Button>
           <Button 
@@ -41,11 +41,11 @@ export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat, theme
             }}
           >
             <RefreshCw className={`mr-2 h-4 w-4 ${textColor}`} />
-            <span className={textColor}>Restart Chat</span>
+            <span>Restart Chat</span>
           </Button>
           <Button variant="ghost" className={`justify-start ${hoverBgColor}`}>
             <Settings className={`mr-2 h-4 w-4 ${textColor}`} />
-            <span className={textColor}>Settings</span>
+            <span>Settings</span>
           </Button>
         </div>
       </SheetContent>

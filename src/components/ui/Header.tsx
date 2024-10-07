@@ -4,10 +4,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from "./button";
-import monkLogo from '@/assets/ModernMonkLablogo.svg';
-import homeLogo from '@/assets/home-logo-removebg-preview.png';
-import buildLogo from '@/assets/hammer-crash.png';
-import checkinLogo from '@/assets/calendar-clock.png';
+import lightLogo from '@/assets/rainbowlab.png';
+import darkLogo from '@/assets/lightrainbowlab (2).png';
+import homeLogoLight from '@/assets/aiblacklogo.png';
+import homeLogoDark from '@/assets/aiwhitelogo.png';
+import buildLogoLight from '@/assets/hammerblackicon.png';
+import buildLogoDark from '@/assets/hammerwhiteicon.png';
+import checkinLogoLight from '@/assets/checkinblacklogo.png';
+import checkinLogoDark from '@/assets/checkinwhitelogo.png';
 import SimpleSheet from './simple-sheet';
 import { ThemeToggle } from "./themetoggle";
 import { useTheme } from "next-themes";
@@ -25,6 +29,8 @@ const Header: React.FC = () => {
     console.log('Restart chat triggered');
   };
 
+  const buttonThemeClass = theme === 'dark' ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-gray-200 hover:bg-gray-300';
+
   return (
     <header className={`w-full py-4 relative ${theme === 'dark' ? 'bg-zinc-900 text-white' : 'bg-white text-gray-900'}`}>
       <div className="absolute top-4 right-4">
@@ -35,35 +41,48 @@ const Header: React.FC = () => {
           isOpen={isSheetOpen} 
           onOpenChange={setIsSheetOpen} 
           onRestartChat={handleRestartChat}
+          theme={theme as 'dark' | 'light'}
         />
         <div className="logo-container cursor-pointer mb-4" onClick={handleLogoClick}>
           <img 
-            src={monkLogo.src} 
-            alt="Monk Logo" 
-            className="w-32 h-32"
+            src={theme === 'dark' ? darkLogo.src : lightLogo.src}
+            alt="Rainbow Lab Logo" 
+            className="w-auto h-auto"
           />
         </div>
         <nav className="flex space-x-8 items-center">
           {/* Home Button */}
-          <Button asChild variant="ghost">
-            <Link href="/" className={`flex items-center space-x-3 ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'}`}>
-              <img src={homeLogo.src} alt="Home" className="w-8 h-8" />
+          <Button asChild variant="ghost" className={buttonThemeClass}>
+            <Link href="/" className="flex items-center space-x-3">
+              <img 
+                src={theme === 'dark' ? homeLogoDark.src : homeLogoLight.src}
+                alt="Home" 
+                className="w-8 h-8"
+              />
               <span className="text-lg">Home</span>
             </Link>
           </Button>
           
           {/* Build Button */}
-          <Button asChild variant="ghost">
-            <Link href="/build" className={`flex items-center space-x-3 ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'}`}>
-              <img src={buildLogo.src} alt="Build" className="w-8 h-8" />
+          <Button asChild variant="ghost" className={buttonThemeClass}>
+            <Link href="/build" className="flex items-center space-x-3">
+              <img 
+                src={theme === 'dark' ? buildLogoDark.src : buildLogoLight.src}
+                alt="Build" 
+                className="w-8 h-8"
+              />
               <span className="text-lg">Build</span>
             </Link>
           </Button>
           
           {/* Checkin Button */}
-          <Button asChild variant="ghost">
-            <Link href="/checkin" className={`flex items-center space-x-3 ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'}`}>
-              <img src={checkinLogo.src} alt="Checkin" className="w-8 h-8" />
+          <Button asChild variant="ghost" className={buttonThemeClass}>
+            <Link href="/checkin" className="flex items-center space-x-3">
+              <img 
+                src={theme === 'dark' ? checkinLogoDark.src : checkinLogoLight.src}
+                alt="Checkin" 
+                className="w-8 h-8"
+              />
               <span className="text-lg">Checkin</span>
             </Link>
           </Button>
