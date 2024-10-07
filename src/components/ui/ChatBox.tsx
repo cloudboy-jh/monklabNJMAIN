@@ -36,7 +36,6 @@ const ChatBox: React.FC = () => {
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
     if (inputMessage.trim() === '' || isLoading) return;
-
     const newMessage: Message = { text: inputMessage, sender: 'user' };
     setMessages(prevMessages => [...prevMessages, newMessage]);
     setInputMessage('');
@@ -109,7 +108,10 @@ const ChatBox: React.FC = () => {
   };
 
   return (
-    <div className={`flex flex-col flex-1 max-h-[800px] min-h-[800px] p-4 w-full max-w-4xl rounded-2xl overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white'}`}>
+    <div 
+      className={`flex flex-col flex-1 rounded-2xl overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white'}`}
+      style={{ height: '800px', maxWidth: '1200px', width: '100%' }}
+    >
       <SimpleSheet 
         isOpen={isSheetOpen} 
         onOpenChange={setIsSheetOpen} 

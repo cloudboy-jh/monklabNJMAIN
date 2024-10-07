@@ -16,13 +16,6 @@ import SimpleSheet from './simple-sheet';
 import { ThemeToggle } from "./themetoggle";
 import { useTheme } from "next-themes";
 
-interface SimpleSheetProps {
-    isOpen: boolean;
-    onOpenChange: (isOpen: boolean) => void;
-    onRestartChat: () => void;
-    theme: 'dark' | 'light'; // Add this line
-}
-
 const Header: React.FC = () => {
   const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -30,10 +23,6 @@ const Header: React.FC = () => {
 
   const handleLogoClick = () => {
     setIsSheetOpen(true);
-  };
-
-  const handleRestartChat = () => {
-    console.log('Restart chat triggered');
   };
 
   const buttonThemeClass = theme === 'dark' ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-gray-200 hover:bg-gray-300';
@@ -46,14 +35,13 @@ const Header: React.FC = () => {
       <div className="flex flex-col items-center justify-center">
         <SimpleSheet 
           isOpen={isSheetOpen} 
-          onOpenChange={setIsSheetOpen} 
-          onRestartChat={handleRestartChat}
+          onOpenChange={setIsSheetOpen}
         />
         <div className="logo-container cursor-pointer mb-4" onClick={handleLogoClick}>
           <img 
             src={theme === 'dark' ? darkLogo.src : lightLogo.src}
             alt="Rainbow Lab Logo" 
-            className="w-auto h-auto"
+            className="w-70 h-20"
           />
         </div>
         <nav className="flex space-x-8 items-center">

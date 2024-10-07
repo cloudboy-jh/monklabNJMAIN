@@ -12,16 +12,19 @@ import { useTheme } from "next-themes"
 interface SimpleSheetProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  onRestartChat: () => void;
+  onRestartChat?: () => void; // Make onRestartChat optional
 }
 
-export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat }: SimpleSheetProps) {
+const SimpleSheet: React.FC<SimpleSheetProps> = ({ isOpen, onOpenChange, onRestartChat }) => {
   const { theme } = useTheme()
 
   const bgColor = theme === 'dark' ? 'bg-zinc-800' : 'bg-white';
   const textColor = theme === 'dark' ? 'text-white' : 'text-black';
   const hoverBgColor = theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-gray-100';
   const borderColor = theme === 'dark' ? 'border-zinc-700' : 'border-gray-200';
+
+  // If onRestartChat is provided, use it; otherwise, use a default empty function
+  const handleRestartChat = onRestartChat || (() => {});
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -38,7 +41,7 @@ export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat }: Sim
             variant="ghost" 
             className={`justify-start ${hoverBgColor}`}
             onClick={() => {
-              onRestartChat();
+              handleRestartChat();
               onOpenChange(false);
             }}
           >
@@ -53,4 +56,6 @@ export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat }: Sim
       </SheetContent>
     </Sheet>
   )
-}
+};
+
+export default SimpleSheet;
