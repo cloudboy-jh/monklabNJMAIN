@@ -7,15 +7,17 @@ import {
 } from "@/components/ui/sheet"
 import { Home, RefreshCw, Settings } from "lucide-react"
 import Link from 'next/link'
+import { useTheme } from "next-themes"
 
 interface SimpleSheetProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onRestartChat: () => void;
-  theme: 'light' | 'dark';
 }
 
-export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat, theme }: SimpleSheetProps) {
+export default function SimpleSheet({ isOpen, onOpenChange, onRestartChat }: SimpleSheetProps) {
+  const { theme } = useTheme()
+
   const bgColor = theme === 'dark' ? 'bg-zinc-800' : 'bg-white';
   const textColor = theme === 'dark' ? 'text-white' : 'text-black';
   const hoverBgColor = theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-gray-100';

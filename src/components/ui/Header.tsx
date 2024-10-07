@@ -16,6 +16,13 @@ import SimpleSheet from './simple-sheet';
 import { ThemeToggle } from "./themetoggle";
 import { useTheme } from "next-themes";
 
+interface SimpleSheetProps {
+    isOpen: boolean;
+    onOpenChange: (isOpen: boolean) => void;
+    onRestartChat: () => void;
+    theme: 'dark' | 'light'; // Add this line
+}
+
 const Header: React.FC = () => {
   const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -41,7 +48,6 @@ const Header: React.FC = () => {
           isOpen={isSheetOpen} 
           onOpenChange={setIsSheetOpen} 
           onRestartChat={handleRestartChat}
-          theme={theme as 'dark' | 'light'}
         />
         <div className="logo-container cursor-pointer mb-4" onClick={handleLogoClick}>
           <img 
