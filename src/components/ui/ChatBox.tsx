@@ -18,18 +18,13 @@ const ChatBox: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Update these to use environment variables
-  const [modelTemperature, setModelTemperature] = useState<number>(
-    parseFloat(process.env.NEXT_PUBLIC_TEMP || '0.7')
-  );
-  const [modelChoice, setModelChoice] = useState<string>(
-    process.env.NEXT_PUBLIC_MODEL || "gpt-4"
-  );
+  const [modelTemperature, setModelTemperature] = useState<number>(0.7);
+  const [modelChoice, setModelChoice] = useState<string>('gpt-4-0125-preview');
   const [maxTokens, setMaxTokens] = useState<number>(150);
 
   const SYSTEM_MESSAGE = {
     role: "system",
-    content: process.env.NEXT_PUBLIC_SYSTEM_PROMPT || "You are an AI assistant for MonkLab, a web app that helps users build software projects. Provide expert guidance on tech stacks, including front-end, back-end, databases, and deployment. Offer concise, practical advice on coding best practices and tools, tailored to the user's needs. Keep a professional, supportive, and informative tone."
+    content: "You are an AI assistant for MonkLab, a web app that helps users build software projects. Provide expert guidance on tech stacks, including front-end, back-end, databases, and deployment. Offer concise, practical advice on coding best practices and tools, tailored to the user's needs. Keep a professional, supportive, and informative tone."
   };
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -58,9 +53,7 @@ const ChatBox: React.FC = () => {
       ];
 
       const response = await axios.post('/api/chat', {
-        model: modelChoice,
         messages: allMessages,
-        temperature: modelTemperature,
         max_tokens: maxTokens
       });
 
