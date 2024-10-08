@@ -9,14 +9,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         req.body,
         {
           headers: {
-            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+            'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
             'Content-Type': 'application/json'
           }
         }
       );
       res.status(200).json(response.data);
     } catch (error) {
-      res.status(500).json({ error: 'Error processing your request' });
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Error processing your request', details: error.message });
     }
   } else {
     res.setHeader('Allow', ['POST']);

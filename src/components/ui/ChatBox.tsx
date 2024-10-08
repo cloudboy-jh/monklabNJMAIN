@@ -107,6 +107,17 @@ const ChatBox: React.FC = () => {
     );
   };
 
+  useEffect(() => {
+    const fetchConfig = async () => {
+      const response = await fetch('/api/config');
+      const config = await response.json();
+      setModelTemperature(config.modelTemperature);
+      setModelChoice(config.modelChoice);
+      SYSTEM_MESSAGE.content = config.systemPrompt;
+    };
+    fetchConfig();
+  }, []);
+
   if (!mounted) {
     return null;
   }
