@@ -16,8 +16,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       );
       res.status(200).json(response.data);
     } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ error: 'Error processing your request', details: error.message });
+      console.error('Error:', error instanceof Error ? error : new Error('Unknown error'));
+      res.status(500).json({ error: 'Error processing your request', details: error instanceof Error ? error.message : 'Unknown error' });
     }
   } else {
     res.setHeader('Allow', ['POST']);
