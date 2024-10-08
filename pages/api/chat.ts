@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const response = await axios.post(
         'https://api.openai.com/v1/chat/completions',
         {
-          model: process.env.MODEL_CHOICE || 'gpt-4',
+          model: process.env.MODEL_CHOICE || 'gpt-4o',
           messages: req.body.messages,
           temperature: parseFloat(process.env.MODEL_TEMPERATURE || '0.7'),
           max_tokens: req.body.max_tokens,
