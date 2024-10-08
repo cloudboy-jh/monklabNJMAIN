@@ -19,7 +19,7 @@ const ChatBox: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [modelTemperature, setModelTemperature] = useState<number>(0.7);
-  const [modelChoice, setModelChoice] = useState<string>('gpt-4o');
+  const [modelChoice, setModelChoice] = useState<string>('gpt-4o-mini');
   const [maxTokens, setMaxTokens] = useState<number>(150);
 
   const SYSTEM_MESSAGE = {
