@@ -193,7 +193,7 @@ const ChatBox: React.FC = () => {
           onChange={handleInputChange}
           placeholder="Message MonkLab"
           disabled={isLoading}
-          className={`flex-grow bg-transparent border-none p-2 text-base outline-none ${
+          className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${ // Added font-bold
             theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
           }`}
         />

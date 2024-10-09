@@ -19,8 +19,11 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     setMounted(true);
+
+    // Determine system theme if theme is set to 'system'
     if (theme === 'system') {
-      setTheme('dark');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDarkScheme ? 'dark' : 'light');
     }
   }, []);
 
@@ -55,6 +58,8 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!mounted) return; // Ensure component is mounted
+
     const cleanupHome = setupAnimation('.home-animation', '/animations/homeicon.json', '/animations/homeiconwhite.json');
     const cleanupCheckin = setupAnimation('.checkin-animation', '/animations/calendaricon.json', '/animations/calendariconwhite.json');
     const cleanupBuild = setupAnimation('.build-animation', '/animations/wrench.json', '/animations/wrenchwhite.json');
@@ -64,7 +69,7 @@ const Header: React.FC = () => {
       cleanupCheckin && cleanupCheckin();
       cleanupBuild && cleanupBuild();
     };
-  }, [theme]);
+  }, [theme, mounted]); // Add 'mounted' as a dependency
 
   const handleLogoClick = () => {
     setIsSheetOpen(true);
@@ -98,7 +103,7 @@ const Header: React.FC = () => {
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/" className="flex items-center space-x-3">
               <div className="home-animation w-8 h-8"></div> {/* Lottie container */}
-              <span className="text-lg">Home</span>
+              <span className="text-lg font-bold">Home</span> {/* Added font-bold */}
             </Link>
           </Button>
           
@@ -106,7 +111,7 @@ const Header: React.FC = () => {
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/build" className="flex items-center space-x-3">
               <div className="build-animation w-8 h-8"></div> {/* Lottie container */}
-              <span className="text-lg">Build</span>
+              <span className="text-lg font-bold">Build</span> {/* Added font-bold */}
             </Link>
           </Button>
           
@@ -114,7 +119,7 @@ const Header: React.FC = () => {
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/checkin" className="flex items-center space-x-3">
               <div className="checkin-animation w-8 h-8"></div> {/* Lottie container */}
-              <span className="text-lg">Checkin</span>
+              <span className="text-lg font-bold">Checkin</span> {/* Added font-bold */}
             </Link>
           </Button>
         </nav>
