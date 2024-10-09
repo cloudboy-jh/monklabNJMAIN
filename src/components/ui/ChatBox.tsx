@@ -161,7 +161,7 @@ const ChatBox: React.FC = () => {
             key={index}
             className={`flex mb-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <div className={`max-w-[70%] p-3 rounded-lg break-words ${
+            <div className={`max-w-[90%] sm:max-w-[70%] p-3 rounded-lg break-words ${
               message.sender === 'user' 
                 ? 'bg-blue-600 text-white' 
                 : theme === 'dark' 
@@ -177,7 +177,7 @@ const ChatBox: React.FC = () => {
         ))}
         {isLoading && (
           <div className="flex justify-start mb-3">
-            <div className={`max-w-[70%] p-3 rounded-lg ${
+            <div className={`max-w-[90%] sm:max-w-[70%] p-3 rounded-lg ${
               theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'
             }`}>
               Typing...

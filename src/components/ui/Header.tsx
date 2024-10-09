@@ -95,10 +95,10 @@ const Header: React.FC = () => {
           <img 
             src={theme === 'dark' ? darkLogo.src : lightLogo.src}
             alt="Rainbow Lab Logo" 
-            className="w-70 h-20"
+            className="w-40 h-20" // Adjusted size for responsiveness
           />
         </div>
-        <nav className="flex space-x-8 items-center">
+        <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-8 items-center">
           {/* Home Button with Lottie Animation */}
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/" className="flex items-center space-x-3">
