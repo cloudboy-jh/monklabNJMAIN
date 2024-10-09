@@ -5,15 +5,17 @@ import Header from '@/components/ui/Header';
 import { Progress } from '@/components/ui/Progress';
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { motion } from 'framer-motion'; // for animation
 
 function BuildPage() {
   const [stackItems, setStackItems] = useState<string[]>([]);
   const [progress, setProgress] = useState<number>(0);
   const { theme } = useTheme();
+  const [startBuild, setStartBuild] = useState(false); // Track if build is started
+  const [animateCard, setAnimateCard] = useState(false); // Track card animation
 
   useEffect(() => {
     loadTechStack();
-    simulateProgress();
   }, []);
 
   function simulateProgress() {
@@ -26,8 +28,6 @@ function BuildPage() {
         return prevProgress + 10;
       });
     }, 1000);
-
-    return () => clearInterval(interval);
   }
 
   function loadTechStack() {
@@ -39,9 +39,19 @@ function BuildPage() {
 
     items.forEach((item, index) => {
       setTimeout(() => {
-        setStackItems(prevItems => [...prevItems, item]);
+        setStackItems(prevItems => {
+          // Prevent duplicate stack items
+          return prevItems.includes(item) ? prevItems : [...prevItems, item];
+        });
       }, index * 2000);
     });
+  }
+
+  function startBuilding() {
+    setStartBuild(true);
+    setAnimateCard(true); // Trigger card animation
+    simulateProgress();
+    // Add CLI logic here to detect tech stack and deploy to Vercel
   }
 
   const isDarkMode = theme === 'dark';
@@ -51,11 +61,18 @@ function BuildPage() {
       <Header />
       <main className="flex flex-col items-center justify-start p-4 sm:p-6 mt-10">
         <h1 className={`text-2xl sm:text-3xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Build Your Project</h1>
-        <div className={`card w-full max-w-md sm:max-w-lg mb-6 p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`}>
+        
+        {/* Updated card animation */}
+        <motion.div 
+          className={`card w-full max-w-md sm:max-w-lg mb-6 p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`} 
+          animate={animateCard ? { opacity: 1, y: 0 } : { opacity: 0.5, y: 50 }} // New animation
+          transition={{ duration: 0.5, ease: "easeOut" }} // Optional: control the duration and easing of the animation
+        >
           <h2 className={`text-xl sm:text-2xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Build Progress</h2>
           <Progress value={progress} className="w-full" />
           <p className={`mt-2 ${isDarkMode ? 'text-white' : 'text-gray-700'}`}>Progress: {progress}%</p>
-        </div>
+        </motion.div>
+
         <div className={`card w-full max-w-md sm:max-w-lg mb-6 p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`}>
           <h2 className={`text-xl sm:text-2xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Tech Stack</h2>
           <ul id="stack-list" className={isDarkMode ? 'text-white' : 'text-gray-700'}>
@@ -64,14 +81,17 @@ function BuildPage() {
             ))}
           </ul>
         </div>
+
         <div className={`card w-full max-w-md sm:max-w-lg mb-6 p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`}>
           <h2 className={`text-xl sm:text-2xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Build Configuration</h2>
           <p className={isDarkMode ? 'text-white' : 'text-gray-700'}>Customize your project settings and dependencies here.</p>
         </div>
+        
         <Button 
           variant="destructive" 
           size="lg" 
           className="mt-4"
+          onClick={startBuilding} // Trigger build
         >
           Start Building
         </Button>
