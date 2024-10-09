@@ -172,7 +172,7 @@ const ChatBox: React.FC = () => {
           type="text"
           value={inputMessage}
           onChange={handleInputChange}
-          placeholder={isChatStarted ? "Message MonkLab" : "Start your project idea..."}
+          placeholder={isChatStarted ? "Message MonkLab" : "Start your idea..."}
           className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${
             theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
           }`}
