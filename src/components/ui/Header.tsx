@@ -119,7 +119,7 @@ const Header: React.FC = () => {
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/checkin" className="flex items-center space-x-3">
               <div className="checkin-animation w-6 h-6"></div> {/* Lottie container */}
-              <span className="text-md font-bold">Checkin</span> {/* Added font-bold */}
+              <span className="text-md font-bold">Check-In</span> {/* Added font-bold */}
             </Link>
           </Button>
         </nav>
