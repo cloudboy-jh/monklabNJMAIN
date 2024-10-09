@@ -145,8 +145,8 @@ const ChatBox: React.FC = () => {
 
   return (
     <div 
-      className={`flex flex-col flex-1 rounded-2xl overflow-hidden shadow-lg ${theme === 'light' ? 'bg-white' : 'bg-zinc-800'}`}
-      style={{ height: '800px', maxWidth: '1200px', width: '100%' }}
+      className={`flex flex-col flex-1 rounded-2xl overflow-hidden ${theme === 'light' ? 'bg-white' : 'bg-zinc-800'}`}
+      style={{ height: '700px', maxWidth: '1600px', width: '100%' }}
     >
       <SimpleSheet 
         isOpen={isSheetOpen} 
@@ -184,7 +184,7 @@ const ChatBox: React.FC = () => {
         )}
         {error && <div className="text-red-600 text-center mt-2">{error}</div>}
       </div>
-      <form onSubmit={handleSendMessage} className={`flex items-center p-4 rounded-full overflow-hidden shadow-md ${
+      <form onSubmit={handleSendMessage} className={`flex items-center p-4 rounded-full overflow-hidden ${
         theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100'
       }`}>
         <input
@@ -193,14 +193,14 @@ const ChatBox: React.FC = () => {
           onChange={handleInputChange}
           placeholder="Message MonkLab"
           disabled={isLoading}
-          className={`flex-grow bg-transparent border-none p-3 text-base outline-none ${
+          className={`flex-grow bg-transparent border-none p-2 text-base outline-none ${
             theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
           }`}
         />
         <button
           type="submit"
           disabled={isLoading || inputMessage.trim() === ''}
-          className={`bg-transparent text-red-500 border-none px-4 text-2xl cursor-pointer hover:bg-white/[.1] disabled:bg-transparent disabled:cursor-not-allowed ${
+          className={`bg-transparent text-red-500 border-none px-4 text-2xl cursor-pointer disabled:bg-transparent disabled:cursor-not-allowed ${
             theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
           }`}
         >
