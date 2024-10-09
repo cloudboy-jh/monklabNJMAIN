@@ -100,3 +100,16 @@ body {
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
   background-color: #f87171;
 }
+
+/* Existing styles... */
+
+.logo-container {
+  width: 280px; /* Adjust as needed */
+  height: 80px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensures the animation fits within the container */
+}
+
+/* Optional: Add any additional styles for responsiveness or theming */

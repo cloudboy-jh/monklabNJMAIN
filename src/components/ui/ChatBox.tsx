@@ -6,7 +6,7 @@ import SimpleSheet from './simple-sheet';
 import { useTheme } from 'next-themes'; // Ensure this is correct
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import tomorrow from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism'; // or import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type Message = {
   text: string;

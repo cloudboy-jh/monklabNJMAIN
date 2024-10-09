@@ -9,6 +9,6 @@ declare module 'react-syntax-highlighter' {
 
 // Declare the styles module separately
 declare module 'react-syntax-highlighter/dist/esm/styles/prism' {
-    const styles: any;
-    export default styles;
+    export const tomorrow: any;
+    // Add other styles if needed
 }
