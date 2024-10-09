@@ -55,6 +55,20 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		keyframes: {
+  			shine: {
+  				'0%': { left: '-100%' },
+  				'100%': { left: '100%' },
+  			},
+  			sweep: {
+  				'0%': { left: '-150%' },
+  				'100%': { left: '150%' },
+  			},
+  		},
+  		animation: {
+  			shine: 'shine 2s infinite',
+  			'light-sweep': 'sweep 3s infinite',
   		}
   	}
   },

@@ -34,8 +34,17 @@ const ChatBox: React.FC = () => {
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
+  const [isChatStarted, setIsChatStarted] = useState(false); // New state to track if chat has started
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputMessage(e.target.value);
+  };
+
+  const handleInitialPrompt = (e: FormEvent) => {
+    e.preventDefault();
+    if (inputMessage.trim() === '') return;
+    setIsChatStarted(true); // Switch to chat mode
+    handleSendMessage(e); // Send the initial message
   };
 
   const handleSendMessage = async (e: FormEvent) => {
@@ -146,75 +155,110 @@ const ChatBox: React.FC = () => {
   }
 
   return (
-    <div 
-      className={`flex flex-col flex-1 rounded-2xl overflow-hidden ${theme === 'light' ? 'bg-white' : 'bg-zinc-800'}`}
-      style={{ height: '700px', maxWidth: '1600px', width: '100%' }}
-    >
-      <SimpleSheet 
-        isOpen={isSheetOpen} 
-        onOpenChange={setIsSheetOpen} 
-        onRestartChat={handleRestartChat}
-      />
-      <div className="flex-1 overflow-y-auto p-4 pb-[70px]">
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex mb-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div className={`max-w-[90%] sm:max-w-[70%] p-3 rounded-lg break-words ${
-              message.sender === 'user' 
-                ? 'bg-blue-600 text-white' 
-                : theme === 'dark' 
-                  ? 'bg-gray-700 text-white' 
-                  : 'bg-gray-200 text-black'
-            }`}>
-              {message.sender === 'bot' 
-                ? renderFormattedMessage(message.text)
-                : message.text
-              }
-            </div>
+    <div className="flex flex-col items-center justify-center h-full"> {/* Centered vertically */}
+      {!isChatStarted ? (
+        <>
+          <div className="relative">
+            <h1 className="text-2xl font-bold mb-4 relative overflow-hidden">
+              <span className="shine-text">Let’s build something together</span>
+              <div className="light-sweep absolute inset-0"></div>
+            </h1>
           </div>
-        ))}
-        {isLoading && (
-          <div className="flex justify-start mb-3">
-            <div className={`max-w-[90%] sm:max-w-[70%] p-3 rounded-lg ${
-              theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'
-            }`}>
-              Typing...
-            </div>
-          </div>
-        )}
-        {error && <div className="text-red-600 text-center mt-2">{error}</div>}
-      </div>
-      <form onSubmit={handleSendMessage} className={`flex items-center p-4 rounded-full overflow-hidden ${
-        theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100'
-      }`}>
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={handleInputChange}
-          placeholder="Message MonkLab"
-          disabled={isLoading}
-          className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${ // Added font-bold
-            theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
-          }`}
-        />
-        <button
-          type="submit"
-          disabled={isLoading || inputMessage.trim() === ''}
-          className={`bg-transparent border-none px-4 cursor-pointer disabled:bg-transparent disabled:cursor-not-allowed ${
-            theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
-          }`}
-        >
-          {isLoading ? '...' : (
-            <img 
-              src={theme === 'dark' ? arrowWhite.src : arrowBlack.src} 
-              alt="Send" 
-              className="w-6 h-6"
+          <form onSubmit={handleInitialPrompt} className={`flex items-center p-4 rounded-full overflow-hidden ${
+            theme === 'dark' ? 'bg-zinc-700' : 'bg-gray-100'
+          }`} style={{ width: '100%', maxWidth: '800px' }}>
+            <input
+              type="text"
+              value={inputMessage}
+              onChange={handleInputChange}
+              placeholder="Start your project idea..."
+              className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${
+                theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
+              }`}
             />
-          )}
-        </button>
-      </form>
+            <button
+              type="submit"
+              className={`bg-transparent border-none px-4 cursor-pointer ${
+                theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
+              }`}
+            >
+              <img 
+                src={theme === 'dark' ? arrowWhite.src : arrowBlack.src} 
+                alt="Send" 
+                className="w-6 h-6"
+              />
+            </button>
+          </form>
+        </>
+      ) : (
+        <>
+          <SimpleSheet 
+            isOpen={isSheetOpen} 
+            onOpenChange={setIsSheetOpen} 
+            onRestartChat={handleRestartChat}
+          />
+          <div className="flex-1 overflow-y-auto p-4 pb-[70px]">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex mb-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div className={`max-w-[90%] sm:max-w-[70%] p-3 rounded-lg break-words ${
+                  message.sender === 'user' 
+                    ? 'bg-blue-600 text-white' 
+                    : theme === 'dark' 
+                      ? 'bg-gray-700 text-white' 
+                      : 'bg-gray-200 text-black'
+                }`}>
+                  {message.sender === 'bot' 
+                    ? renderFormattedMessage(message.text)
+                    : message.text
+                  }
+                </div>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start mb-3">
+                <div className={`max-w-[90%] sm:max-w-[70%] p-3 rounded-lg ${
+                  theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'
+                }`}>
+                  Typing...
+                </div>
+              </div>
+            )}
+            {error && <div className="text-red-600 text-center mt-2">{error}</div>}
+          </div>
+          <form onSubmit={handleSendMessage} className={`flex items-center p-4 rounded-full overflow-hidden ${
+            theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100'
+          }`}>
+            <input
+              type="text"
+              value={inputMessage}
+              onChange={handleInputChange}
+              placeholder="Message MonkLab"
+              disabled={isLoading}
+              className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${
+                theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
+              }`}
+            />
+            <button
+              type="submit"
+              disabled={isLoading || inputMessage.trim() === ''}
+              className={`bg-transparent border-none px-4 cursor-pointer disabled:bg-transparent disabled:cursor-not-allowed ${
+                theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
+              }`}
+            >
+              {isLoading ? '...' : (
+                <img 
+                  src={theme === 'dark' ? arrowWhite.src : arrowBlack.src} 
+                  alt="Send" 
+                  className="w-6 h-6"
+                />
+              )}
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 };

@@ -113,3 +113,32 @@ body {
 }
 
 /* Optional: Add any additional styles for responsiveness or theming */
+
+.light-sweep {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 200%;
+  height: 100%;
+  transform: skewX(-30deg);
+  animation: sweep 6s infinite; /* Changed from 3s to 6s */
+}
+
+/* Light mode styles */
+:root .light-sweep {
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 70%);
+}
+
+/* Dark mode styles */
+.dark .light-sweep {
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 70%);
+}
+
+@keyframes sweep {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
