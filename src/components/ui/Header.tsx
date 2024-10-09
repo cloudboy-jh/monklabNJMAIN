@@ -95,31 +95,31 @@ const Header: React.FC = () => {
           <img 
             src={theme === 'dark' ? darkLogo.src : lightLogo.src}
             alt="Rainbow Lab Logo" 
-            className="w-40 h-20" // Adjusted size for responsiveness
+            className="w-30 h-20" // Adjusted size for responsiveness
           />
         </div>
         <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-8 items-center">
           {/* Home Button with Lottie Animation */}
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/" className="flex items-center space-x-3">
-              <div className="home-animation w-8 h-8"></div> {/* Lottie container */}
-              <span className="text-lg font-bold">Home</span> {/* Added font-bold */}
+              <div className="home-animation w-6 h-6"></div> {/* Lottie container */}
+              <span className="text-md font-bold">Home</span> {/* Added font-bold */}
             </Link>
           </Button>
           
           {/* Build Button with Lottie Animation */}
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/build" className="flex items-center space-x-3">
-              <div className="build-animation w-8 h-8"></div> {/* Lottie container */}
-              <span className="text-lg font-bold">Build</span> {/* Added font-bold */}
+              <div className="build-animation w-6 h-6"></div> {/* Lottie container */}
+              <span className="text-md font-bold">Build</span> {/* Added font-bold */}
             </Link>
           </Button>
           
           {/* Checkin Button with Lottie Animation */}
           <Button asChild variant="ghost" className={buttonThemeClass}>
             <Link href="/checkin" className="flex items-center space-x-3">
-              <div className="checkin-animation w-8 h-8"></div> {/* Lottie container */}
-              <span className="text-lg font-bold">Checkin</span> {/* Added font-bold */}
+              <div className="checkin-animation w-6 h-6"></div> {/* Lottie container */}
+              <span className="text-md font-bold">Checkin</span> {/* Added font-bold */}
             </Link>
           </Button>
         </nav>
