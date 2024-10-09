@@ -4,6 +4,9 @@ import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from 'reac
 import axios from 'axios';
 import SimpleSheet from './simple-sheet';
 import { useTheme } from 'next-themes'; // Ensure this is correct
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import tomorrow from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type Message = {
   text: string;
@@ -19,7 +22,7 @@ const ChatBox: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [modelTemperature, setModelTemperature] = useState<number>(0.7);
-  const [modelChoice, setModelChoice] = useState<string>('gpt-4o');
+  const [modelChoice, setModelChoice] = useState<string>('gpt-4o-mini');
   const [maxTokens, setMaxTokens] = useState<number>(150);
 
   const SYSTEM_MESSAGE = {
@@ -91,12 +94,37 @@ const ChatBox: React.FC = () => {
     }
   }, [theme]);
 
-  // Function to render code if the bot generates it
-  const renderCodeBlock = (code: string) => {
+  // Replace the existing renderCodeBlock function with this more comprehensive message renderer
+  const renderFormattedMessage = (message: string) => {
     return (
-      <pre className="bg-gray-900 text-gray-200 font-mono p-3 rounded-md whitespace-pre-wrap word-break break-words mt-1">
-        <code>{code}</code>
-      </pre>
+      <ReactMarkdown
+        components={{
+          code: ({ node, inline = false, className, children, ...props }: { node?: any; inline?: boolean; className?: string; children?: React.ReactNode; } & React.HTMLProps<HTMLElement>) => { // Made 'node' optional
+            const match = /language-(\w+)/.exec(className || '');
+            return !inline && match ? (
+              <SyntaxHighlighter
+                style={tomorrow}
+                language={match[1]}
+                PreTag="div"
+                {...props}
+              >
+                {String(children).replace(/\n$/, '')}
+              </SyntaxHighlighter>
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+          },
+          // Add custom styling for other elements if needed
+          p: ({ children }) => <p className="mb-2">{children}</p>,
+          ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal pl-4 mb-2">{children}</ol>,
+          li: ({ children }) => <li className="mb-1">{children}</li>,
+        }}
+      >
+        {message}
+      </ReactMarkdown>
     );
   };
 
@@ -138,7 +166,10 @@ const ChatBox: React.FC = () => {
                   ? 'bg-gray-700 text-white' 
                   : 'bg-gray-200 text-black'
             }`}>
-              {message.text.startsWith('```') ? renderCodeBlock(message.text.replace(/```/g, '')) : message.text}
+              {message.sender === 'bot' 
+                ? renderFormattedMessage(message.text)
+                : message.text
+              }
             </div>
           </div>
         ))}
