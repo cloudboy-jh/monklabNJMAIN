@@ -7,6 +7,8 @@ import { useTheme } from 'next-themes'; // Ensure this is correct
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism'; // or import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import arrowBlack from '@/assets/arrowblack.png';
+import arrowWhite from '@/assets/arrowwhite.png';
 
 type Message = {
   text: string;
@@ -200,11 +202,17 @@ const ChatBox: React.FC = () => {
         <button
           type="submit"
           disabled={isLoading || inputMessage.trim() === ''}
-          className={`bg-transparent text-red-500 border-none px-4 text-2xl cursor-pointer disabled:bg-transparent disabled:cursor-not-allowed ${
+          className={`bg-transparent border-none px-4 cursor-pointer disabled:bg-transparent disabled:cursor-not-allowed ${
             theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
           }`}
         >
-          {isLoading ? '...' : '↑'}
+          {isLoading ? '...' : (
+            <img 
+              src={theme === 'dark' ? arrowWhite.src : arrowBlack.src} 
+              alt="Send" 
+              className="w-6 h-6"
+            />
+          )}
         </button>
       </form>
     </div>
