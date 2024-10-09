@@ -155,49 +155,51 @@ const ChatBox: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full"> {/* Centered vertically */}
-      {!isChatStarted ? (
-        <>
-          <div className="relative">
-            <h1 className="text-2xl font-bold mb-4 relative overflow-hidden">
-              <span className="shine-text">Let’s build something together</span>
-              <div className="light-sweep absolute inset-0"></div>
-            </h1>
-          </div>
-          <form onSubmit={handleInitialPrompt} className={`flex items-center p-4 rounded-full overflow-hidden ${
-            theme === 'dark' ? 'bg-zinc-700' : 'bg-gray-100'
-          }`} style={{ width: '100%', maxWidth: '800px' }}>
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={handleInputChange}
-              placeholder="Start your project idea..."
-              className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${
-                theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
-              }`}
-            />
-            <button
-              type="submit"
-              className={`bg-transparent border-none px-4 cursor-pointer ${
-                theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
-              }`}
-            >
-              <img 
-                src={theme === 'dark' ? arrowWhite.src : arrowBlack.src} 
-                alt="Send" 
-                className="w-6 h-6"
-              />
-            </button>
-          </form>
-        </>
-      ) : (
+    <div className="flex flex-col items-center justify-start h-full pb-40"> {/* Changed pt-10 to pb-20 */}
+      <div className="relative mb-8"> {/* Increased bottom margin */}
+        <h1 className="text-2xl font-bold relative overflow-hidden">
+          <span className="shine-text">Let's build something together</span>
+          <div className="light-sweep absolute inset-0"></div>
+        </h1>
+      </div>
+      
+      <form onSubmit={isChatStarted ? handleSendMessage : handleInitialPrompt} 
+            className={`flex items-center p-4 rounded-full overflow-hidden mb-8 ${
+              theme === 'dark' ? 'bg-zinc-700' : 'bg-gray-100'
+            }`} 
+            style={{ width: '100%', maxWidth: '800px' }}>
+        <input
+          type="text"
+          value={inputMessage}
+          onChange={handleInputChange}
+          placeholder={isChatStarted ? "Message MonkLab" : "Start your project idea..."}
+          className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${
+            theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
+          }`}
+        />
+        <button
+          type="submit"
+          disabled={isLoading || inputMessage.trim() === ''}
+          className={`bg-transparent border-none px-4 cursor-pointer disabled:opacity-50 ${
+            theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
+          }`}
+        >
+          <img 
+            src={theme === 'dark' ? arrowWhite.src : arrowBlack.src} 
+            alt="Send" 
+            className="w-6 h-6"
+          />
+        </button>
+      </form>
+
+      {isChatStarted && (
         <>
           <SimpleSheet 
             isOpen={isSheetOpen} 
             onOpenChange={setIsSheetOpen} 
             onRestartChat={handleRestartChat}
           />
-          <div className="flex-1 overflow-y-auto p-4 pb-[70px]">
+          <div className="flex-1 w-full max-w-4xl overflow-y-auto p-4">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -228,35 +230,6 @@ const ChatBox: React.FC = () => {
             )}
             {error && <div className="text-red-600 text-center mt-2">{error}</div>}
           </div>
-          <form onSubmit={handleSendMessage} className={`flex items-center p-4 rounded-full overflow-hidden ${
-            theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100'
-          }`}>
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={handleInputChange}
-              placeholder="Message MonkLab"
-              disabled={isLoading}
-              className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${
-                theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
-              }`}
-            />
-            <button
-              type="submit"
-              disabled={isLoading || inputMessage.trim() === ''}
-              className={`bg-transparent border-none px-4 cursor-pointer disabled:bg-transparent disabled:cursor-not-allowed ${
-                theme === 'dark' ? 'hover:bg-white/[.1]' : 'hover:bg-gray-200'
-              }`}
-            >
-              {isLoading ? '...' : (
-                <img 
-                  src={theme === 'dark' ? arrowWhite.src : arrowBlack.src} 
-                  alt="Send" 
-                  className="w-6 h-6"
-                />
-              )}
-            </button>
-          </form>
         </>
       )}
     </div>
