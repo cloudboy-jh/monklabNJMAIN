@@ -4,9 +4,9 @@ import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
+import { Button } from "@/components/ui/button"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
-
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 
 const DropdownMenuContent = React.forwardRef<
@@ -27,119 +27,170 @@ const DropdownMenuContent = React.forwardRef<
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      <div className="flex justify-center space-x-4">
+      <div className="flex justify-center space-x-20">
+        {/* Front End dropdown */}
         <DropdownMenuPrimitive.Root>
-          <DropdownMenuTrigger className="dropdown-trigger">
-            Front End
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="dropdown-trigger">
+              Front End
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[16rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}
             >
-              <DropdownMenuPrimitive.CheckboxItem
-                checked={selectedItems.includes("React")}
-                onCheckedChange={() => handleCheckedChange("React")}
-                className="dropdown-menu-item"
-              >
-                <img src="/icons/reacticon.svg" alt="React" className={`inline-block w-8 h-8 mr-2 ${iconClass}`} />
-                React
-              </DropdownMenuPrimitive.CheckboxItem>
-              <DropdownMenuPrimitive.CheckboxItem
-                checked={selectedItems.includes("Vue")}
-                onCheckedChange={() => handleCheckedChange("Vue")}
-                className="dropdown-menu-item"
-              >
-                <img src="/icons/vueicon.svg" alt="Vue" className={`inline-block w-8 h-8 mr-2 ${iconClass}`} />
-                Vue
-              </DropdownMenuPrimitive.CheckboxItem>
-              <DropdownMenuPrimitive.CheckboxItem
-                checked={selectedItems.includes("Angular")}
-                onCheckedChange={() => handleCheckedChange("Angular")}
-                className="dropdown-menu-item"
-              >
-                <img src="/icons/angularicon.svg" alt="Angular" className={`inline-block w-8 h-8 mr-2 ${iconClass}`} />
-                Angular
-              </DropdownMenuPrimitive.CheckboxItem>
-              <DropdownMenuPrimitive.CheckboxItem
-                checked={selectedItems.includes("Svelte")}
-                onCheckedChange={() => handleCheckedChange("Svelte")}
-                className="dropdown-menu-item"
-              >
-                <img src="/icons/svelteicon.svg" alt="Svelte" className={`inline-block w-8 h-8 mr-2 ${iconClass}`} />
-                Svelte
-              </DropdownMenuPrimitive.CheckboxItem>
-              <DropdownMenuPrimitive.CheckboxItem
-                checked={selectedItems.includes("TailwindCSS")}
-                onCheckedChange={() => handleCheckedChange("TailwindCSS")}
-                className="dropdown-menu-item"
-              >
-                <img src="/icons/tailwindicon.svg" alt="TailwindCSS" className={`inline-block w-8 h-8 mr-2 ${iconClass}`} />
-                TailwindCSS
-              </DropdownMenuPrimitive.CheckboxItem>
+              {["React", "Vue", "Angular", "Svelte", "TailwindCSS"].map(item => (
+                <DropdownMenuPrimitive.CheckboxItem
+                  key={item}
+                  checked={selectedItems.includes(item)}
+                  onCheckedChange={() => handleCheckedChange(item)}
+                  onSelect={(event) => event.preventDefault()} // Prevent closing
+                  className="dropdown-menu-item flex items-center"
+                >
+                  <img
+                    src={`/icons/${
+                      item === "TailwindCSS"
+                        ? "tailwindicon"
+                        : item.toLowerCase() + "icon"
+                    }.svg`}
+                    alt={item}
+                    className={`inline-block w-8 h-8 mr-4 ${iconClass}`}
+                  />
+                  <span className="ml-4">{item}</span>
+                </DropdownMenuPrimitive.CheckboxItem>
+              ))}
             </DropdownMenuPrimitive.Content>
           </DropdownMenuPrimitive.Portal>
         </DropdownMenuPrimitive.Root>
 
-        {/* Placeholder dropdowns */}
+        {/* Back End dropdown */}
         <DropdownMenuPrimitive.Root>
-          <DropdownMenuTrigger className="dropdown-trigger">
-            Placeholder 1
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="dropdown-trigger">
+              Back End
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}
             >
-              {/* Placeholder content */}
+              {["Node.js", "Express", "Django", "Ruby on Rails", "Spring Boot"].map(item => (
+                <DropdownMenuPrimitive.CheckboxItem
+                  key={item}
+                  checked={selectedItems.includes(item)}
+                  onCheckedChange={() => handleCheckedChange(item)}
+                  onSelect={(event) => event.preventDefault()} // Prevent closing
+                  className="dropdown-menu-item flex items-center"
+                >
+                  <img
+                    src={`/icons/${
+                      item === "Node.js"
+                        ? "nodejsicon"
+                        : item === "Ruby on Rails"
+                        ? "rubyicon"
+                        : item.toLowerCase().replace(/\s+/g, '') + "icon"
+                    }.svg`}
+                    alt={item}
+                    className={`inline-block w-8 h-8 mr-4 ${iconClass}`}
+                  />
+                  <span className="ml-4">{item}</span>
+                </DropdownMenuPrimitive.CheckboxItem>
+              ))}
             </DropdownMenuPrimitive.Content>
           </DropdownMenuPrimitive.Portal>
         </DropdownMenuPrimitive.Root>
 
+        {/* Database dropdown */}
         <DropdownMenuPrimitive.Root>
-          <DropdownMenuTrigger className="dropdown-trigger">
-            Placeholder 2
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="dropdown-trigger">
+              Database
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}
             >
-              {/* Placeholder content */}
+              {["MongoDB", "PostgreSQL", "MySQL", "Redis"].map(item => (
+                <DropdownMenuPrimitive.CheckboxItem
+                  key={item}
+                  checked={selectedItems.includes(item)}
+                  onCheckedChange={() => handleCheckedChange(item)}
+                  onSelect={(event) => event.preventDefault()} // Prevent closing
+                  className="dropdown-menu-item flex items-center"
+                >
+                  <img src={`/icons/${item.toLowerCase().replace('postgresql', 'postgre')}icon.svg`} alt={item} className={`inline-block w-8 h-8 mr-4 ${iconClass}`} />
+                  <span className="ml-4">{item}</span>
+                </DropdownMenuPrimitive.CheckboxItem>
+              ))}
             </DropdownMenuPrimitive.Content>
           </DropdownMenuPrimitive.Portal>
         </DropdownMenuPrimitive.Root>
 
+        {/* Deploy dropdown */}
         <DropdownMenuPrimitive.Root>
-          <DropdownMenuTrigger className="dropdown-trigger">
-            Placeholder 3
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="dropdown-trigger">
+              Deploy
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}
             >
-              {/* Placeholder content */}
+              {["Vercel", "Netlify", "Digital Ocean", "Cloud Hosting"].map(item => (
+                <DropdownMenuPrimitive.CheckboxItem
+                  key={item}
+                  checked={selectedItems.includes(item)}
+                  onCheckedChange={() => handleCheckedChange(item)}
+                  onSelect={(event) => event.preventDefault()} // Prevent closing
+                  className="dropdown-menu-item flex items-center"
+                >
+                  <img
+                    src={`/icons/${
+                      item === "Vercel"
+                        ? "vercelmainicon"
+                        : item === "Netlify"
+                        ? "netlify"
+                        : item === "Cloud Hosting"
+                        ? "cloudmainicon"
+                        : item.toLowerCase().replace(/\s+/g, '') + "icon"
+                    }.svg`}
+                    alt={item}
+                    className={`inline-block w-8 h-8 mr-4 ${iconClass}`}
+                  />
+                  <span className="ml-4">{item}</span>
+                  {item === "Vercel" || item === "Netlify" || item === "Digital Ocean" ? (
+                    <span className="italic ml-2">recommended</span>
+                  ) : item === "Cloud Hosting" ? (
+                    <span className="ml-2 bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 text-transparent bg-clip-text shine">Coming Soon</span>
+                  ) : null}
+                </DropdownMenuPrimitive.CheckboxItem>
+              ))}
             </DropdownMenuPrimitive.Content>
           </DropdownMenuPrimitive.Portal>
         </DropdownMenuPrimitive.Root>

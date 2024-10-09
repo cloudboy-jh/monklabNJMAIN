@@ -161,3 +161,18 @@ body {
   background-color: var(--accent);
   color: var(--accent-foreground);
 }
+
+/* Shine effect for "coming soon" */
+.shine {
+  background-size: 200% auto;
+  animation: shine 10s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}

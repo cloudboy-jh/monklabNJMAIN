@@ -57,8 +57,8 @@ function BuildPage() {
       <Header />
       <main className="flex flex-col items-center justify-start p-4 sm:p-6 mt-4">
         <div 
-          className={`card w-full max-w-2xl sm:max-w-3xl mb-80 p-8 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`} 
-          style={{ minHeight: '500px' }} // Add this line to set a minimum height
+          className={`card w-full max-w-3xl sm:max-w-4xl mb-80 p-8 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md`} 
+          style={{ minHeight: '500px', width: '900px' }} // Adjust width and maxWidth
         >
           <h2 className="text-center text-2xl font-bold mb-4">Select Tech Stack</h2>
           <DropdownMenu>
