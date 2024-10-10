@@ -81,11 +81,6 @@ body {
   transition: transform 0.5s ease-in-out;
 }
 
-.code-box {
-  transition: transform 0.5s ease-in-out;
-  transform: translateX(100%);
-}
-
 .show-code-box .code-box {
   transform: translateX(0);
 }
@@ -93,7 +88,7 @@ body {
 .flex-col {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
+  align-items: center;
   justify-content: start;
   width: 100%;
   gap: 1rem;
@@ -215,4 +210,13 @@ body {
 
 .rainbow-button:hover {
     background-position: 100% 0;
+}
+
+/* Ensure the theme colors are applied */
+.bg-zinc-800 {
+  background-color: #27272a; /* Dark theme background */
+}
+
+.bg-white {
+  background-color: #ffffff; /* Light theme background */
 }

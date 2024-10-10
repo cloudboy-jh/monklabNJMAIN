@@ -106,13 +106,13 @@ function BuildPage() {
               className={`mt-4 transition-transform duration-500 ${startBuild ? 'transform -translate-x-1/2' : ''} rainbow-button`}
               onClick={startBuilding}
             >
-              Start Building
+              <span className="font-bold">Start Building</span>
             </Button>
           </div>
         </div>
 
         {showCodeBox && (
-          <div className="code-box w-full max-w-md sm:max-w-lg p-4 bg-white rounded-md shadow-md transition-transform duration-500 transform translate-x-full">
+          <div className="code-box w-full max-w-md sm:max-w-lg p-4 bg-white rounded-md shadow-md transition-transform duration-500 transform translate-x-full mt-[-760px]">
             <CodeBox selectedTechStack={selectedTechStack} />
           </div>
         )}
