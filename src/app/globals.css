@@ -41,7 +41,7 @@ body {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 240 6% 10%; /* This is zinc-800 */
+    --background: 240 6% 10%;
     --foreground: 0 0% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -77,7 +77,27 @@ body {
   }
 }
 
-/* Add these styles at the end of your globals.css file */
+.card {
+  transition: transform 0.5s ease-in-out;
+}
+
+.code-box {
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(100%);
+}
+
+.show-code-box .code-box {
+  transform: translateX(0);
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  justify-content: start;
+  width: 100%;
+  gap: 1rem;
+}
 
 .rdp {
   --rdp-cell-size: 40px;
@@ -101,18 +121,14 @@ body {
   background-color: #f87171;
 }
 
-/* Existing styles... */
-
 .logo-container {
-  width: 280px; /* Adjust as needed */
-  height: 80px; /* Adjust as needed */
+  width: 280px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Ensures the animation fits within the container */
+  overflow: hidden;
 }
-
-/* Optional: Add any additional styles for responsiveness or theming */
 
 .light-sweep {
   position: absolute;
@@ -121,15 +137,13 @@ body {
   width: 200%;
   height: 100%;
   transform: skewX(-30deg);
-  animation: sweep 6s infinite; /* Changed from 3s to 6s */
+  animation: sweep 6s infinite;
 }
 
-/* Light mode styles */
 :root .light-sweep {
   background: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 70%);
 }
 
-/* Dark mode styles */
 .dark .light-sweep {
   background: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 70%);
 }
@@ -143,10 +157,9 @@ body {
   }
 }
 
-/* Styles specifically for the tech stack dropdown */
 .dropdown-menu {
-  z-index: 1000; /* Ensure it appears above other elements */
-  background-color: var(--popover); /* Use your theme's popover color */
+  z-index: 1000;
+  background-color: var(--popover);
   border-radius: var(--radius);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -162,7 +175,6 @@ body {
   color: var(--accent-foreground);
 }
 
-/* Shine effect for "coming soon" */
 .shine {
   background-size: 200% auto;
   animation: shine 10s linear infinite;
@@ -175,4 +187,32 @@ body {
   100% {
     background-position: 200%;
   }
+}
+
+.rainbow-button {
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 400% 400%;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: background-position 0.5s ease;
+}
+
+.rainbow-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: left 0.5s ease;
+}
+
+.rainbow-button:hover::before {
+    left: 100%;
+}
+
+.rainbow-button:hover {
+    background-position: 100% 0;
 }

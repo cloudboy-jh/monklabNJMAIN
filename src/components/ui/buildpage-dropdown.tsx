@@ -6,22 +6,41 @@ import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 
-const DropdownMenu = DropdownMenuPrimitive.Root
-const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
+interface DropdownMenuProps {
+  onSelectionChange: (selected: string[]) => void;
+  children: React.ReactNode;
+}
+
+const DropdownMenu: React.FC<DropdownMenuProps> = ({ onSelectionChange, children }) => {
+  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
+
+  const handleCheckedChange = (item: string) => {
+    setSelectedItems(prev => {
+      const newSelection = prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item];
+      onSelectionChange?.(newSelection);
+      return newSelection;
+    });
+  };
+
+  return (
+    <DropdownMenuPrimitive.Root>
+      {React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { handleCheckedChange, selectedItems } as React.PropsWithChildren<{ handleCheckedChange?: Function; selectedItems?: any[] }>);
+        }
+        return child;
+      })}
+    </DropdownMenuPrimitive.Root>
+  );
+};
+
+const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => {
-  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> & { handleCheckedChange?: (item: string) => void, selectedItems?: string[] }
+>(({ className, sideOffset = 4, handleCheckedChange, selectedItems = [], ...props }, ref) => {
   const { theme } = useTheme();
-
-  const handleCheckedChange = (item: string) => {
-    setSelectedItems(prev =>
-      prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-    );
-  };
-
   const iconClass = theme === 'dark' ? 'filter invert' : '';
   const textClass = theme === 'dark' ? 'text-white' : 'text-black';
 
@@ -49,7 +68,7 @@ const DropdownMenuContent = React.forwardRef<
                 <DropdownMenuPrimitive.CheckboxItem
                   key={item}
                   checked={selectedItems.includes(item)}
-                  onCheckedChange={() => handleCheckedChange(item)}
+                  onCheckedChange={() => handleCheckedChange?.(item)}
                   onSelect={(event) => event.preventDefault()} // Prevent closing
                   className="dropdown-menu-item flex items-center"
                 >
@@ -90,7 +109,7 @@ const DropdownMenuContent = React.forwardRef<
                 <DropdownMenuPrimitive.CheckboxItem
                   key={item}
                   checked={selectedItems.includes(item)}
-                  onCheckedChange={() => handleCheckedChange(item)}
+                  onCheckedChange={() => handleCheckedChange?.(item)}
                   onSelect={(event) => event.preventDefault()} // Prevent closing
                   className="dropdown-menu-item flex items-center"
                 >
@@ -133,7 +152,7 @@ const DropdownMenuContent = React.forwardRef<
                 <DropdownMenuPrimitive.CheckboxItem
                   key={item}
                   checked={selectedItems.includes(item)}
-                  onCheckedChange={() => handleCheckedChange(item)}
+                  onCheckedChange={() => handleCheckedChange?.(item)}
                   onSelect={(event) => event.preventDefault()} // Prevent closing
                   className="dropdown-menu-item flex items-center"
                 >
@@ -162,11 +181,11 @@ const DropdownMenuContent = React.forwardRef<
               )}
               {...props}
             >
-              {["Vercel", "Netlify", "Digital Ocean", "Cloud Hosting"].map(item => (
+              {["Vercel", "Netlify", "Digital Ocean", "Large Scale Host"].map(item => (
                 <DropdownMenuPrimitive.CheckboxItem
                   key={item}
                   checked={selectedItems.includes(item)}
-                  onCheckedChange={() => handleCheckedChange(item)}
+                  onCheckedChange={() => handleCheckedChange?.(item)}
                   onSelect={(event) => event.preventDefault()} // Prevent closing
                   className="dropdown-menu-item flex items-center"
                 >
@@ -176,7 +195,7 @@ const DropdownMenuContent = React.forwardRef<
                         ? "vercelmainicon"
                         : item === "Netlify"
                         ? "netlify"
-                        : item === "Cloud Hosting"
+                        : item === "Large Scale Host"
                         ? "cloudmainicon"
                         : item.toLowerCase().replace(/\s+/g, '') + "icon"
                     }.svg`}
@@ -186,7 +205,7 @@ const DropdownMenuContent = React.forwardRef<
                   <span className="ml-4">{item}</span>
                   {item === "Vercel" || item === "Netlify" || item === "Digital Ocean" ? (
                     <span className="italic ml-2">recommended</span>
-                  ) : item === "Cloud Hosting" ? (
+                  ) : item === "Large Scale Host" ? (
                     <span className="ml-2 bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 text-transparent bg-clip-text shine">Coming Soon</span>
                   ) : null}
                 </DropdownMenuPrimitive.CheckboxItem>
