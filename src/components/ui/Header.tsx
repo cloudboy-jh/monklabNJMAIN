@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from "./button";
-import lightLogo from '@/assets/rainbowlab.png';
-import darkLogo from '@/assets/lightrainbowlab (2).png';
+import logo from '@/assets/monklabmainicon.svg';
 import SimpleSheet from './simple-sheet';
 import { ThemeToggle } from "./themetoggle";
 import { useTheme } from "next-themes";
@@ -91,11 +90,11 @@ const Header: React.FC = () => {
           isOpen={isSheetOpen} 
           onOpenChange={setIsSheetOpen}
         />
-        <div className="logo-container cursor-pointer mb-4" onClick={handleLogoClick}>
+        <div className="logo-container cursor-pointer mb-8" onClick={handleLogoClick} style={{ paddingBottom: '10px' }}> {/* Added padding-bottom */}
           <img 
-            src={theme === 'dark' ? darkLogo.src : lightLogo.src}
-            alt="Rainbow Lab Logo" 
-            className="w-30 h-20" // Adjusted size for responsiveness
+            src={logo.src}
+            alt="Monk Lab Main Icon" 
+            className={`w-60 h-50 ${theme === 'dark' ? 'invert' : ''}`} // Further increased height
           />
         </div>
         <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-8 items-center">
