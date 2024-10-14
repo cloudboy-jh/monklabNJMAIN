@@ -3,15 +3,15 @@
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { cn } from "@/lib/utils"
-import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 
 interface DropdownMenuProps {
   onSelectionChange: (selected: string[]) => void;
+  theme?: string;
   children: React.ReactNode;
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ onSelectionChange, children }) => {
+const DropdownMenu: React.FC<DropdownMenuProps> = ({ onSelectionChange, theme, children }) => {
   const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
 
   const handleCheckedChange = (item: string) => {
@@ -26,7 +26,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ onSelectionChange, children
     <DropdownMenuPrimitive.Root>
       {React.Children.map(children, child => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child, { handleCheckedChange, selectedItems } as React.PropsWithChildren<{ handleCheckedChange?: Function; selectedItems?: any[] }>);
+          return React.cloneElement(child, { handleCheckedChange, selectedItems, theme } as React.PropsWithChildren<{ handleCheckedChange?: Function; selectedItems?: any[]; theme?: string }>);
         }
         return child;
       })}
@@ -38,11 +38,11 @@ const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> & { handleCheckedChange?: (item: string) => void, selectedItems?: string[] }
->(({ className, sideOffset = 4, handleCheckedChange, selectedItems = [], ...props }, ref) => {
-  const { theme } = useTheme();
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> & { handleCheckedChange?: (item: string) => void, selectedItems?: string[], theme?: string }
+>(({ className, sideOffset = 4, handleCheckedChange, selectedItems = [], theme, ...props }, ref) => {
   const iconClass = theme === 'dark' ? 'filter invert' : '';
   const textClass = theme === 'dark' ? 'text-white' : 'text-black';
+  const bgClass = theme === 'dark' ? 'bg-zinc-800' : 'bg-white';
 
   return (
     <div className="flex flex-col items-center space-y-4">
@@ -59,7 +59,7 @@ const DropdownMenuContent = React.forwardRef<
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[16rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[16rem] overflow-hidden rounded-md border ${bgClass} p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}
@@ -100,7 +100,7 @@ const DropdownMenuContent = React.forwardRef<
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border ${bgClass} p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}
@@ -143,7 +143,7 @@ const DropdownMenuContent = React.forwardRef<
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border ${bgClass} p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}
@@ -176,7 +176,7 @@ const DropdownMenuContent = React.forwardRef<
               ref={ref}
               sideOffset={sideOffset}
               className={cn(
-                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border bg-white p-1 shadow-md ${textClass}`,
+                `dropdown-menu z-50 min-w-[12rem] overflow-hidden rounded-md border ${bgClass} p-1 shadow-md ${textClass}`,
                 className
               )}
               {...props}

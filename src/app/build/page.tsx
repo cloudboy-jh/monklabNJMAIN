@@ -62,15 +62,13 @@ function BuildPage() {
     setSelectedTechStack([]);
   }
 
-  const isDarkMode = theme === 'dark';
-
   return (
-    <div className={`w-full min-h-screen flex flex-col ${isDarkMode ? 'bg-zinc-900' : 'bg-gray-100'}`}>
+    <div className={`w-full min-h-screen flex flex-col ${theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100'}`}>
       <Header />
       <main className="flex flex-col items-center justify-start p-4 sm:p-6 mt-4">
         <div className="flex flex-col items-center space-y-4">
           <div 
-            className={`card w-full max-w-3xl sm:max-w-4xl p-8 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md transition-transform duration-500 ${startBuild ? 'transform -translate-x-1/2' : ''}`} 
+            className={`card w-full max-w-3xl sm:max-w-4xl p-8 ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md transition-transform duration-500 ${startBuild ? 'transform -translate-x-1/2' : ''}`} 
             style={{ minHeight: '500px', width: '900px' }}
           >
             <div className="flex justify-center items-center mb-4 relative">
@@ -79,24 +77,24 @@ function BuildPage() {
                 variant="outline" 
                 size="sm" 
                 onClick={resetBuild}
-                className={`absolute right-0 font-bold transition-transform duration-500 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                className={`absolute right-0 font-bold transition-transform duration-500 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
               >
                 RESET
               </Button>
             </div>
-            <DropdownMenu onSelectionChange={setSelectedTechStack}>
+            <DropdownMenu onSelectionChange={setSelectedTechStack} theme={theme}>
               <DropdownMenuTrigger className="btn mb-6"></DropdownMenuTrigger>
               <DropdownMenuContent />
             </DropdownMenu>
           </div>
 
           <div 
-            className={`card w-full max-w-3xl sm:max-w-4xl p-4 ${isDarkMode ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md transition-transform duration-500 ${startBuild ? 'transform -translate-x-1/2' : ''}`} 
+            className={`card w-full max-w-3xl sm:max-w-4xl p-4 ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white'} rounded-md shadow-md transition-transform duration-500 ${startBuild ? 'transform -translate-x-1/2' : ''}`} 
             style={{ width: '900px' }}
           >
-            <h2 className={`text-xl sm:text-2xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Build Progress</h2>
+            <h2 className={`text-xl sm:text-2xl font-semibold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Build Progress</h2>
             <Progress value={progress} className="w-full" />
-            <p className={`mt-2 ${isDarkMode ? 'text-white' : 'text-gray-700'}`}>Progress: {progress}%</p>
+            <p className={`mt-2 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>Progress: {progress}%</p>
           </div>
 
           <div className="flex justify-center w-full">
