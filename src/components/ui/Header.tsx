@@ -2,36 +2,44 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTheme } from "next-themes";
-import logo from '@/assets/monklabmainicon.svg';
 import SimpleSheet from './simple-sheet';
 import { ThemeToggle } from "./themetoggle";
 import FloatingDock from './floatingdoc';
+import { ChevronRight, BrainCircuit } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isFloatingDockVisible, setIsFloatingDockVisible] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-
-    // Determine system theme if theme is set to 'system'
     if (theme === 'system') {
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setTheme(prefersDarkScheme ? 'dark' : 'light');
     }
   }, []);
 
-  const handleLogoClick = () => {
+  const handleSheetOpen = () => {
     setIsSheetOpen(true);
   };
 
-  if (!mounted) {
-    return null;
-  }
+  const toggleFloatingDock = () => {
+    setIsFloatingDockVisible(!isFloatingDockVisible);
+  };
+
+  if (!mounted) return null;
 
   return (
     <header className={`w-full py-4 relative ${theme === 'light' ? 'bg-white text-gray-900' : 'bg-zinc-900 text-white'}`}>
+      <button
+        onClick={handleSheetOpen}
+        className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+        aria-label="Open menu"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
@@ -40,16 +48,21 @@ const Header: React.FC = () => {
           isOpen={isSheetOpen} 
           onOpenChange={setIsSheetOpen}
         />
-        <div className="logo-container cursor-pointer mb-4" onClick={handleLogoClick}>
-          <img 
-            src={logo.src}
-            alt="Monk Lab Main Icon" 
-            className={`w-60 h-50 ${theme === 'dark' ? 'invert' : ''}`}
+        <div 
+          className="logo-container mb-4 cursor-pointer"
+          onClick={toggleFloatingDock}
+          onMouseEnter={() => setIsFloatingDockVisible(true)}
+          onMouseLeave={() => setIsFloatingDockVisible(false)}
+        >
+          <BrainCircuit 
+            className={`w-16 h-16 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
           />
         </div>
-        <div className="mt-2">
-          <FloatingDock />
-        </div>
+        {isFloatingDockVisible && (
+          <div className="mt-2">
+            <FloatingDock />
+          </div>
+        )}
       </div>
     </header>
   );
