@@ -65,18 +65,18 @@ export default function FloatingDock() {
   ];
 
   return (
-    <nav className={`${theme === 'dark' ? 'bg-zinc-800' : 'bg-gray-200'} bg-opacity-90 rounded-full px-4 py-2 backdrop-blur-sm`}>
-      <div className="flex items-center justify-center space-x-6">
+    <nav className={`${theme === 'dark' ? 'bg-zinc-800' : 'bg-gray-200'} bg-opacity-90 rounded-full px-6 py-1 backdrop-blur-sm`}>
+      <div className="flex items-center justify-center space-x-8">
         {dockItems.map((item, index) => (
           <Link
             key={index}
             href={item.href}
-            className={`group flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ease-in-out hover:bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 ${
+            className={`group flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ease-in-out hover:bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 ${
               theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-300'
             }`}
             aria-label={item.label}
           >
-            <div className={`${item.icon} w-6 h-6`}></div>
+            <div className={`${item.icon} w-5 h-5`}></div>
           </Link>
         ))}
       </div>
