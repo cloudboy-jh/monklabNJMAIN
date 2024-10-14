@@ -1,17 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Button } from "./button";
+import { useTheme } from "next-themes";
 import logo from '@/assets/monklabmainicon.svg';
 import SimpleSheet from './simple-sheet';
 import { ThemeToggle } from "./themetoggle";
-import { useTheme } from "next-themes";
-import Lottie from 'lottie-web';
+import FloatingDock from './floatingdoc';
 
 const Header: React.FC = () => {
-  const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -26,55 +22,9 @@ const Header: React.FC = () => {
     }
   }, []);
 
-  const setupAnimation = (selector: string, lightPath: string, darkPath: string) => {
-    const container = document.querySelector(selector);
-    if (container) {
-      const animationPath = theme === 'dark' ? darkPath : lightPath;
-
-      const animation = Lottie.loadAnimation({
-        container: container,
-        renderer: 'svg',
-        loop: false,
-        autoplay: false,
-        path: animationPath
-      });
-
-      // Set initial frame based on theme
-      animation.goToAndStop(0, true);
-
-      const handleMouseEnter = () => {
-        animation.stop();
-        animation.play();
-      };
-
-      container.addEventListener('mouseenter', handleMouseEnter);
-
-      return () => {
-        animation.destroy();
-        container.removeEventListener('mouseenter', handleMouseEnter);
-      };
-    }
-  };
-
-  useEffect(() => {
-    if (!mounted) return; // Ensure component is mounted
-
-    const cleanupHome = setupAnimation('.home-animation', '/animations/homeicon.json', '/animations/homeiconwhite.json');
-    const cleanupCheckin = setupAnimation('.checkin-animation', '/animations/calendaricon.json', '/animations/calendariconwhite.json');
-    const cleanupBuild = setupAnimation('.build-animation', '/animations/wrench.json', '/animations/wrenchwhite.json');
-
-    return () => {
-      cleanupHome && cleanupHome();
-      cleanupCheckin && cleanupCheckin();
-      cleanupBuild && cleanupBuild();
-    };
-  }, [theme, mounted]); // Add 'mounted' as a dependency
-
   const handleLogoClick = () => {
     setIsSheetOpen(true);
   };
-
-  const buttonThemeClass = theme === 'light' ? 'bg-gray-200 hover:bg-gray-300' : 'bg-zinc-800 hover:bg-zinc-700';
 
   if (!mounted) {
     return null;
@@ -90,38 +40,16 @@ const Header: React.FC = () => {
           isOpen={isSheetOpen} 
           onOpenChange={setIsSheetOpen}
         />
-        <div className="logo-container cursor-pointer mb-8" onClick={handleLogoClick} style={{ paddingBottom: '10px' }}> {/* Added padding-bottom */}
+        <div className="logo-container cursor-pointer mb-4" onClick={handleLogoClick}>
           <img 
             src={logo.src}
             alt="Monk Lab Main Icon" 
-            className={`w-60 h-50 ${theme === 'dark' ? 'invert' : ''}`} // Further increased height
+            className={`w-60 h-50 ${theme === 'dark' ? 'invert' : ''}`}
           />
         </div>
-        <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-8 items-center">
-          {/* Home Button with Lottie Animation */}
-          <Button asChild variant="ghost" className={buttonThemeClass}>
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="home-animation w-6 h-6"></div> {/* Lottie container */}
-              <span className="text-md font-bold">Home</span> {/* Added font-bold */}
-            </Link>
-          </Button>
-          
-          {/* Build Button with Lottie Animation */}
-          <Button asChild variant="ghost" className={buttonThemeClass}>
-            <Link href="/build" className="flex items-center space-x-3">
-              <div className="build-animation w-6 h-6"></div> {/* Lottie container */}
-              <span className="text-md font-bold">Build</span> {/* Added font-bold */}
-            </Link>
-          </Button>
-          
-          {/* Checkin Button with Lottie Animation */}
-          <Button asChild variant="ghost" className={buttonThemeClass}>
-            <Link href="/checkin" className="flex items-center space-x-3">
-              <div className="checkin-animation w-6 h-6"></div> {/* Lottie container */}
-              <span className="text-md font-bold">Check-In</span> {/* Added font-bold */}
-            </Link>
-          </Button>
-        </nav>
+        <div className="mt-2">
+          <FloatingDock />
+        </div>
       </div>
     </header>
   );
