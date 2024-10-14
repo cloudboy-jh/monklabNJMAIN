@@ -61,7 +61,6 @@ export default function FloatingDock() {
   const dockItems = [
     { icon: 'home-animation', label: "Home", href: "/" },
     { icon: 'build-animation', label: "Build", href: "/build" },
-    { icon: 'checkin-animation', label: "Check-In", href: "/checkin" },
   ];
 
   return (

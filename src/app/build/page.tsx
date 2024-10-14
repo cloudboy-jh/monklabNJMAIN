@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '@/components/ui/buildpage-dropdown';
 import CodeBox from '@/components/ui/CodeBox';
+import { SchedulerComponent } from '@/components/ui/scheduler';
 
 function BuildPage() {
   const [stackItems, setStackItems] = useState<string[]>([]);
@@ -115,6 +116,7 @@ function BuildPage() {
           </div>
         )}
       </main>
+      <SchedulerComponent />
     </div>
   );
 }
