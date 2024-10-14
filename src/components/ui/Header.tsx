@@ -5,11 +5,10 @@ import { useTheme } from "next-themes";
 import SimpleSheet from './simple-sheet';
 import { ThemeToggle } from "./themetoggle";
 import FloatingDock from './floatingdoc';
-import { ChevronRight, BrainCircuit } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isFloatingDockVisible, setIsFloatingDockVisible] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -23,10 +22,6 @@ const Header: React.FC = () => {
 
   const handleSheetOpen = () => {
     setIsSheetOpen(true);
-  };
-
-  const toggleFloatingDock = () => {
-    setIsFloatingDockVisible(!isFloatingDockVisible);
   };
 
   if (!mounted) return null;
@@ -48,21 +43,9 @@ const Header: React.FC = () => {
           isOpen={isSheetOpen} 
           onOpenChange={setIsSheetOpen}
         />
-        <div 
-          className="logo-container mb-4 cursor-pointer"
-          onClick={toggleFloatingDock}
-          onMouseEnter={() => setIsFloatingDockVisible(true)}
-          onMouseLeave={() => setIsFloatingDockVisible(false)}
-        >
-          <BrainCircuit 
-            className={`w-16 h-16 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
-          />
+        <div className="mt-2">
+          <FloatingDock />
         </div>
-        {isFloatingDockVisible && (
-          <div className="mt-2">
-            <FloatingDock />
-          </div>
-        )}
       </div>
     </header>
   );
