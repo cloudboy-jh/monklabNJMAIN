@@ -5,7 +5,7 @@ import {
   Sheet,
   SheetContent,
 } from "@/components/ui/sheet"
-import { Home, RefreshCw, Settings } from "lucide-react"
+import { Home } from "lucide-react"
 import Link from 'next/link'
 import { useTheme } from "next-themes"
 
@@ -23,9 +23,6 @@ const SimpleSheet: React.FC<SimpleSheetProps> = ({ isOpen, onOpenChange, onResta
   const hoverBgColor = theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-gray-100';
   const borderColor = theme === 'dark' ? 'border-zinc-700' : 'border-gray-200';
 
-  // If onRestartChat is provided, use it; otherwise, use a default empty function
-  const handleRestartChat = onRestartChat || (() => {});
-
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent side="left" className={`${bgColor} ${textColor} border-r ${borderColor}`}>
@@ -36,21 +33,6 @@ const SimpleSheet: React.FC<SimpleSheetProps> = ({ isOpen, onOpenChange, onResta
               <Home className={`mr-2 h-4 w-4 ${textColor}`} />
               <span>Home</span>
             </Link>
-          </Button>
-          <Button 
-            variant="ghost" 
-            className={`justify-start ${hoverBgColor}`}
-            onClick={() => {
-              handleRestartChat();
-              onOpenChange(false);
-            }}
-          >
-            <RefreshCw className={`mr-2 h-4 w-4 ${textColor}`} />
-            <span>Restart Chat</span>
-          </Button>
-          <Button variant="ghost" className={`justify-start ${hoverBgColor}`}>
-            <Settings className={`mr-2 h-4 w-4 ${textColor}`} />
-            <span>Settings</span>
           </Button>
         </div>
       </SheetContent>

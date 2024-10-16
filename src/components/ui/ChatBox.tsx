@@ -3,10 +3,10 @@
 import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
 import SimpleSheet from './simple-sheet';
-import { useTheme } from 'next-themes'; // Ensure this is correct
+import { useTheme } from 'next-themes';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism'; // or import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import arrowBlack from '@/assets/arrowblack.png';
 import arrowWhite from '@/assets/arrowwhite.png';
 
@@ -34,7 +34,7 @@ const ChatBox: React.FC = () => {
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  const [isChatStarted, setIsChatStarted] = useState(false); // New state to track if chat has started
+  const [isChatStarted, setIsChatStarted] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputMessage(e.target.value);
@@ -43,8 +43,8 @@ const ChatBox: React.FC = () => {
   const handleInitialPrompt = (e: FormEvent) => {
     e.preventDefault();
     if (inputMessage.trim() === '') return;
-    setIsChatStarted(true); // Switch to chat mode
-    handleSendMessage(e); // Send the initial message
+    setIsChatStarted(true);
+    handleSendMessage(e);
   };
 
   const handleSendMessage = async (e: FormEvent) => {
@@ -105,14 +105,13 @@ const ChatBox: React.FC = () => {
     }
   }, [theme]);
 
-  // Replace the existing renderCodeBlock function with this more comprehensive message renderer
   const renderFormattedMessage = (message: string) => {
     return (
       <ReactMarkdown
         components={{
-          code: ({ node, inline = false, className, children, ...props }: { node?: any; inline?: boolean; className?: string; children?: React.ReactNode; } & React.HTMLProps<HTMLElement>) => { // Made 'node' optional
+          code: ({ className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || '');
-            return !inline && match ? (
+            return match ? (
               <SyntaxHighlighter
                 style={tomorrow}
                 language={match[1]}
@@ -127,7 +126,6 @@ const ChatBox: React.FC = () => {
               </code>
             );
           },
-          // Add custom styling for other elements if needed
           p: ({ children }) => <p className="mb-2">{children}</p>,
           ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal pl-4 mb-2">{children}</ol>,
@@ -155,8 +153,8 @@ const ChatBox: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start h-full pb-40"> {/* Changed pt-10 to pb-20 */}
-      <div className="relative mb-8"> {/* Increased bottom margin */}
+    <div className="flex flex-col items-center justify-start h-full pb-40">
+      <div className="relative mb-8">
         <h1 className="text-2xl font-bold relative overflow-hidden">
           <span className="shine-text">Let's Ship Your Product Together</span>
           <div className="light-sweep absolute inset-0"></div>
