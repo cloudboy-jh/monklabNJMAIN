@@ -158,7 +158,7 @@ const ChatBox: React.FC = () => {
     <div className="flex flex-col items-center justify-start h-full pb-40"> {/* Changed pt-10 to pb-20 */}
       <div className="relative mb-8"> {/* Increased bottom margin */}
         <h1 className="text-2xl font-bold relative overflow-hidden">
-          <span className="shine-text">Let's build something together</span>
+          <span className="shine-text">Let's Ship Your Product Together</span>
           <div className="light-sweep absolute inset-0"></div>
         </h1>
       </div>
@@ -172,7 +172,7 @@ const ChatBox: React.FC = () => {
           type="text"
           value={inputMessage}
           onChange={handleInputChange}
-          placeholder={isChatStarted ? "Message MonkLab" : "Start your idea..."}
+          placeholder={isChatStarted ? "Message MonkLab" : "Ship your idea..."}
           className={`flex-grow bg-transparent border-none p-2 text-base outline-none font-bold ${
             theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-black placeholder-gray-400'
           }`}
