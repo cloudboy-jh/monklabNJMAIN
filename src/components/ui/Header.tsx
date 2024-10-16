@@ -24,6 +24,12 @@ const Header: React.FC = () => {
     setIsSheetOpen(true);
   };
 
+  const handleRestartChat = () => {
+    // Implement the logic for restarting the chat
+    console.log("Restarting chat...");
+    // You may want to add more functionality here, such as clearing chat history or resetting state
+  };
+
   if (!mounted) return null;
 
   return (
@@ -44,7 +50,7 @@ const Header: React.FC = () => {
           onOpenChange={setIsSheetOpen}
         />
         <div className="mt-2">
-          <FloatingDock />
+          <FloatingDock onRestartChat={handleRestartChat} />
         </div>
       </div>
     </header>
