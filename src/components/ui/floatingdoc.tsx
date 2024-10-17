@@ -14,7 +14,7 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
   const dockItems = [
     { icon: Home, label: "Home", href: "/" },
     { icon: Wrench, label: "Build", href: "/build" },
-    { icon: RefreshCw, label: "Restart Chat", href: "#", onClick: onRestartChat }, // Ensure onRestartChat is used
+    { icon: RefreshCw, label: "Restart Chat", href: "#", onClick: onRestartChat },
     { icon: Settings, label: "Settings", href: "/settings" },
   ];
 
@@ -34,7 +34,7 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
           {dockItems.map((item, index) => (
             <Link key={index} href={item.href} passHref>
               <button
-                onClick={item.onClick} // Ensure onClick is correctly attached
+                onClick={item.onClick}
                 className={`group flex items-center justify-center w-10 h-10 rounded-full transition-all duration-500 ease-in-out hover:bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 ${
                   theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-300'
                 }`}
