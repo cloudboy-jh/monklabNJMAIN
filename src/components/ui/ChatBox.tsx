@@ -156,7 +156,7 @@ const ChatBox: React.FC = () => {
     <div className="flex flex-col items-center justify-start h-full pb-40">
       <div className="relative mb-8">
         <h1 className="text-2xl font-bold relative overflow-hidden">
-          <span className="shine-text">Let's Ship Your Product Together</span>
+          <span className="shine-text">Let's Ship Your Product</span>
           <div className="light-sweep absolute inset-0"></div>
         </h1>
       </div>
