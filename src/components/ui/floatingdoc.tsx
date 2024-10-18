@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTheme } from "next-themes";
 import { Home, Wrench, RefreshCw, Settings } from 'lucide-react';
+import BrainAndCogIcon from '../../assets/brainandcog.svg';
 
 interface FloatingDockProps {
   onRestartChat: () => void;
@@ -28,7 +30,7 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
           }`}
           aria-label="Menu"
         >
-          <img src="/brain-circuit (1).svg" alt="Menu" className="w-9 h-9" />
+          <Image src={BrainAndCogIcon} alt="Menu" width={36} height={36} />
         </button>
         <div className={`flex overflow-hidden transition-all duration-500 ease-in-out ${isDrawerOpen ? 'max-w-xs' : 'max-w-0'}`}>
           {dockItems.map((item, index) => (
