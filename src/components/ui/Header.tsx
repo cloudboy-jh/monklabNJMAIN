@@ -1,57 +1,34 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useTheme } from "next-themes";
-import SimpleSheet from './simple-sheet';
-import { ThemeToggle } from "./themetoggle";
+import React from 'react';
+import { useTheme } from 'next-themes';
+import { ThemeToggle } from './themetoggle';
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
 import FloatingDock from './floatingdoc';
-import { ChevronRight } from 'lucide-react';
 
-const Header: React.FC = () => {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+interface HeaderProps {
+  toggleSidebar: () => void;
+}
 
-  useEffect(() => {
-    setMounted(true);
-    if (theme === 'system') {
-      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDarkScheme ? 'dark' : 'light');
-    }
-  }, []);
-
-  const handleSheetOpen = () => {
-    setIsSheetOpen(true);
-  };
+const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
+  const { theme } = useTheme();
 
   const handleRestartChat = () => {
-    // Implement the logic for restarting the chat
-    console.log("Restarting chat...");
-    // You may want to add more functionality here, such as clearing chat history or resetting state
+    // Implement chat restart logic here
+    console.log('Restarting chat...');
   };
 
-  if (!mounted) return null;
-
   return (
-    <header className={`w-full py-4 relative ${theme === 'light' ? 'bg-white text-gray-900' : 'bg-zinc-900 text-white'}`}>
-      <button
-        onClick={handleSheetOpen}
-        className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
-        aria-label="Open menu"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
-      <div className="absolute top-4 right-4">
-        <ThemeToggle />
+    <header className="w-full py-4 px-6 flex justify-between items-center bg-background">
+      <Button variant="ghost" size="icon" onClick={toggleSidebar} className="mr-4">
+        <Menu className="h-6 w-6" />
+      </Button>
+      <div className="flex-grow flex justify-center">
+        <FloatingDock onRestartChat={handleRestartChat} />
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <SimpleSheet 
-          isOpen={isSheetOpen} 
-          onOpenChange={setIsSheetOpen}
-        />
-        <div className="mt-2">
-          <FloatingDock onRestartChat={handleRestartChat} />
-        </div>
+      <div className="flex items-center space-x-4">
+        <ThemeToggle />
       </div>
     </header>
   );
