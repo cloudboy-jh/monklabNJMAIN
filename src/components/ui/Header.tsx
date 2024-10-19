@@ -20,14 +20,19 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   };
 
   return (
-    <header className="w-full py-4 px-6 flex justify-between items-center bg-background">
-      <Button variant="ghost" size="icon" onClick={toggleSidebar} className="mr-4">
+    <header className="w-full py-4 flex justify-between items-center bg-background relative px-4 sm:px-6 lg:px-8">
+      <Button 
+        variant="ghost" 
+        size="icon" 
+        onClick={toggleSidebar} 
+        className="z-10"
+      >
         <Menu className="h-6 w-6" />
       </Button>
-      <div className="flex-grow flex justify-center">
+      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <FloatingDock onRestartChat={handleRestartChat} />
       </div>
-      <div className="flex items-center space-x-4">
+      <div className="z-10">
         <ThemeToggle />
       </div>
     </header>

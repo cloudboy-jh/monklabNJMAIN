@@ -153,19 +153,18 @@ const ChatBox: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start h-full pb-40">
-      <div className="relative mb-8">
-        <h1 className="text-2xl font-bold relative overflow-hidden">
+    <div className="flex flex-col items-center justify-start h-full pb-40 w-full max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="relative mb-8 w-full">
+        <h1 className="text-2xl font-bold relative overflow-hidden text-center">
           <span className="shine-text">Let's Ship Your Product</span>
           <div className="light-sweep absolute inset-0"></div>
         </h1>
       </div>
       
       <form onSubmit={isChatStarted ? handleSendMessage : handleInitialPrompt} 
-            className={`flex items-center p-4 rounded-full overflow-hidden mb-8 ${
+            className={`flex items-center p-4 rounded-full overflow-hidden mb-8 w-full ${
               theme === 'dark' ? 'bg-zinc-700' : 'bg-gray-100'
-            }`} 
-            style={{ width: '100%', maxWidth: '800px' }}>
+            }`}>
         <input
           type="text"
           value={inputMessage}
@@ -197,7 +196,7 @@ const ChatBox: React.FC = () => {
             onOpenChange={setIsSheetOpen} 
             onRestartChat={handleRestartChat}
           />
-          <div className="flex-1 w-full max-w-4xl overflow-y-auto p-4">
+          <div className="flex-1 w-full overflow-y-auto">
             {messages.map((message, index) => (
               <div
                 key={index}

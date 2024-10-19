@@ -44,7 +44,9 @@ export default function RootLayout({
             <Header toggleSidebar={toggleSidebar} />
             <div className="flex flex-1 overflow-hidden">
               <SidebarComponent isOpen={isSidebarOpen} />
-              <main className="flex-1 overflow-auto">{children}</main>
+              <main className="flex-1 overflow-auto w-full">
+                {children}
+              </main>
             </div>
           </div>
         </ThemeProvider>
