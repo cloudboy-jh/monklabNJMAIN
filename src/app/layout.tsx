@@ -54,6 +54,7 @@ export default function RootLayout({
               alt="Brain and Cog"
               width={50}
               height={50}
+              className="hidden"
             />
             <Header 
               toggleSidebar={toggleSidebar} 
