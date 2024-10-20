@@ -23,7 +23,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -41,7 +41,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex flex-col h-screen">
-            <Header toggleSidebar={toggleSidebar} />
+            <Header toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
             <div className="flex flex-1 overflow-hidden">
               <SidebarComponent isOpen={isSidebarOpen} />
               <main className="flex-1 overflow-auto w-full">

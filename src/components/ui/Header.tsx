@@ -4,14 +4,15 @@ import React from 'react';
 import { useTheme } from 'next-themes';
 import { ThemeToggle } from './themetoggle';
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import FloatingDock from './floatingdoc';
 
 interface HeaderProps {
   toggleSidebar: () => void;
+  isSidebarOpen: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
+const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
   const { theme } = useTheme();
 
   const handleRestartChat = () => {
@@ -27,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
         onClick={toggleSidebar} 
         className="z-10"
       >
-        <Menu className="h-6 w-6" />
+        {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </Button>
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <FloatingDock onRestartChat={handleRestartChat} />
