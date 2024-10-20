@@ -11,7 +11,7 @@ interface FloatingDockProps {
 
 export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
   const { theme } = useTheme();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true); // Start with the drawer open
 
   const dockItems = [
     { icon: Home, label: "Home", href: "/" },
@@ -21,12 +21,12 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
   ];
 
   return (
-    <nav className={`${theme === 'dark' ? 'bg-zinc-800' : 'bg-gray-200'} bg-opacity-90 rounded-full px-4 py-2 backdrop-blur-sm`}>
+    <nav className={`${theme === 'dark' ? 'bg-zinc-800' : 'bg-slate-100'} bg-opacity-90 rounded-full px-4 py-2 backdrop-blur-sm`}>
       <div className="flex items-center justify-center">
         <button
           onClick={() => setIsDrawerOpen(!isDrawerOpen)}
           className={`group flex items-center justify-center w-14 h-14 rounded-full transition-all duration-500 ease-in-out hover:bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 ${
-            theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-300'
+            theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-200'
           }`}
           aria-label="Menu"
         >
@@ -38,7 +38,7 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
               <button
                 onClick={item.onClick}
                 className={`group flex items-center justify-center w-10 h-10 rounded-full transition-all duration-500 ease-in-out hover:bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 ${
-                  theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-300'
+                  theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-200'
                 }`}
                 aria-label={item.label}
               >
