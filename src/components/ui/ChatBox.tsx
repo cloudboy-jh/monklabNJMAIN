@@ -15,7 +15,11 @@ type Message = {
   sender: 'user' | 'bot';
 };
 
-const ChatBox: React.FC = () => {
+interface ChatBoxProps {
+  shouldRestartChat?: boolean;
+}
+
+const ChatBox: React.FC<ChatBoxProps> = ({ shouldRestartChat }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -88,6 +92,7 @@ const ChatBox: React.FC = () => {
     setMessages([]);
     setInputMessage('');
     setError(null);
+    setIsChatStarted(false);
   };
 
   const chatMessagesRef = useRef<HTMLDivElement | null>(null);
@@ -97,13 +102,33 @@ const ChatBox: React.FC = () => {
     if (theme === 'system') {
       setTheme('dark');
     }
+  }, [theme, setTheme]);
+
+  useEffect(() => {
     if (messages.length > 0 && messages[messages.length - 1].sender === 'user') {
       chatMessagesRef.current?.scrollTo({
         top: chatMessagesRef.current.scrollHeight,
         behavior: "smooth"
       });
     }
-  }, [theme]);
+  }, [messages]);
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      const response = await fetch('/api/config');
+      const config = await response.json();
+      setModelTemperature(config.modelTemperature);
+      setModelChoice(config.modelChoice);
+      SYSTEM_MESSAGE.content = config.systemPrompt;
+    };
+    fetchConfig();
+  }, []);
+
+  useEffect(() => {
+    if (shouldRestartChat) {
+      handleRestartChat();
+    }
+  }, [shouldRestartChat]);
 
   const renderFormattedMessage = (message: string) => {
     return (
@@ -136,17 +161,6 @@ const ChatBox: React.FC = () => {
       </ReactMarkdown>
     );
   };
-
-  useEffect(() => {
-    const fetchConfig = async () => {
-      const response = await fetch('/api/config');
-      const config = await response.json();
-      setModelTemperature(config.modelTemperature);
-      setModelChoice(config.modelChoice);
-      SYSTEM_MESSAGE.content = config.systemPrompt;
-    };
-    fetchConfig();
-  }, []);
 
   if (!mounted) {
     return null;

@@ -11,7 +11,7 @@ interface FloatingDockProps {
 
 export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
   const { theme } = useTheme();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true); // Start with the drawer open
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
   const dockItems = [
     { icon: Home, label: "Home", href: "/" },
@@ -34,8 +34,9 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
         </button>
         <div className={`flex overflow-hidden transition-all duration-500 ease-in-out ${isDrawerOpen ? 'max-w-xs' : 'max-w-0'}`}>
           {dockItems.map((item, index) => (
-            <Link key={index} href={item.href} passHref>
+            item.onClick ? (
               <button
+                key={index}
                 onClick={item.onClick}
                 className={`group flex items-center justify-center w-10 h-10 rounded-full transition-all duration-500 ease-in-out hover:bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 ${
                   theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-200'
@@ -44,7 +45,18 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
               >
                 <item.icon className="w-5 h-5" />
               </button>
-            </Link>
+            ) : (
+              <Link key={index} href={item.href} passHref>
+                <button
+                  className={`group flex items-center justify-center w-10 h-10 rounded-full transition-all duration-500 ease-in-out hover:bg-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 ${
+                    theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-800 hover:bg-gray-200'
+                  }`}
+                  aria-label={item.label}
+                >
+                  <item.icon className="w-5 h-5" />
+                </button>
+              </Link>
+            )
           ))}
         </div>
       </div>
