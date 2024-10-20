@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { Button } from "./button"
 import { Calendar } from "./calendar"
@@ -21,8 +22,12 @@ type Appointment = {
   contactInfo: string;
 }
 
-export function SchedulerComponent() {
-  const { theme } = useTheme();
+interface SchedulerComponentProps {
+  theme?: string;
+}
+
+export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme }) => {
+  const { theme: currentTheme } = useTheme();
   const animationContainer = useRef(null);
   const [animation, setAnimation] = useState<AnimationItem | null>(null);
   const [isOpen, setIsOpen] = useState(false)

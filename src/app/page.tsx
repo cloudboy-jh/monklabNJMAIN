@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import ChatBox from '@/components/ui/ChatBox';
 import { SchedulerComponent } from '@/components/ui/scheduler';
+import { useTheme } from 'next-themes';
 
 const HomePage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsVisible(true); // Trigger the fade-in effect
@@ -20,7 +22,7 @@ const HomePage: React.FC = () => {
           <ChatBox />
         </div>
       </main>
-      <SchedulerComponent />
+      <SchedulerComponent theme={theme} />
     </div>
   );
 };
