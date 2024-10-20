@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider";
+import { ThemeProvider } from 'next-themes'
 import { SidebarComponent } from "@/components/components-sidebar";
 import Header from "@/components/ui/Header";
 import Image from "next/image";
@@ -25,16 +25,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [shouldRestartChat, setShouldRestartChat] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleRestartChat = () => {
-    setShouldRestartChat(true);
-    // Reset the flag after a short delay
-    setTimeout(() => setShouldRestartChat(false), 100);
+  const onRestartChat = () => {
+    // Implement the restart chat functionality here
+    console.log("Restarting chat...");
   };
 
   return (
@@ -44,34 +47,31 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
-          disableTransitionOnChange
         >
-          <div className="flex flex-col h-screen">
-            <Image
-              src="/brainandcog.svg"
-              alt="Brain and Cog"
-              width={50}
-              height={50}
-              className="hidden"
-            />
-            <Header 
-              toggleSidebar={toggleSidebar} 
-              isSidebarOpen={isSidebarOpen} 
-              onRestartChat={handleRestartChat}
-            />
-            <div className="flex flex-1 overflow-hidden">
-              <SidebarComponent isOpen={isSidebarOpen} />
-              <main className="flex-1 overflow-auto w-full">
-                {React.Children.map(children, child =>
-                  React.isValidElement(child)
-                    ? React.cloneElement(child as React.ReactElement<any>, { shouldRestartChat })
-                    : child
-                )}
-              </main>
+          {mounted && (
+            <div className="flex flex-col h-screen">
+              <Image
+                src="/brainandcog.svg"
+                alt="Brain and Cog"
+                width={50}
+                height={50}
+                className="hidden"
+              />
+              <Header 
+                toggleSidebar={toggleSidebar}
+                isSidebarOpen={isSidebarOpen}
+                onRestartChat={onRestartChat}
+              />
+              <div className="flex flex-1 overflow-hidden">
+                <SidebarComponent isOpen={isSidebarOpen} />
+                <main className="flex-1 overflow-auto w-full">
+                  {children}
+                </main>
+              </div>
             </div>
-          </div>
+          )}
         </ThemeProvider>
       </body>
     </html>

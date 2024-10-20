@@ -44,14 +44,14 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
         renderer: 'svg',
         loop: false,
         autoplay: false,
-        path: currentTheme === 'dark' ? '/animations/calendariconwhite.json' : '/animations/calendaricon.json'
+        path: theme === 'dark' ? '/animations/calendariconwhite.json' : '/animations/calendaricon.json'
       });
 
       setAnimation(anim);
 
       return () => anim.destroy();
     }
-  }, [currentTheme]);
+  }, [theme]);
 
   const handleMouseEnter = () => {
     if (animation) {
