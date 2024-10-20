@@ -29,7 +29,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ shouldRestartChat }) => {
 
   const [modelTemperature, setModelTemperature] = useState<number>(0.7);
   const [modelChoice, setModelChoice] = useState<string>('gpt-4o-mini');
-  const [maxTokens, setMaxTokens] = useState<number>(150);
+  const [maxTokens, setMaxTokens] = useState<number>(1500);
 
   const SYSTEM_MESSAGE = {
     role: "system",
