@@ -44,14 +44,14 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
         renderer: 'svg',
         loop: false,
         autoplay: false,
-        path: theme === 'dark' ? '/animations/calendariconwhite.json' : '/animations/calendaricon.json'
+        path: currentTheme === 'dark' ? '/animations/calendariconwhite.json' : '/animations/calendaricon.json'
       });
 
       setAnimation(anim);
 
       return () => anim.destroy();
     }
-  }, [theme]);
+  }, [currentTheme]);
 
   const handleMouseEnter = () => {
     if (animation) {
@@ -86,7 +86,7 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
         <PopoverTrigger asChild>
           <Button
             size="icon"
-            className={`rounded-full h-12 w-12 ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-100'}`}
+            className={`rounded-full h-12 w-12 ${currentTheme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-100'}`}
             onMouseEnter={handleMouseEnter}
           >
             <div ref={animationContainer} className="w-6 h-6" />
@@ -94,7 +94,7 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
           </Button>
         </PopoverTrigger>
         <PopoverContent 
-          className={`w-80 p-4 ${theme === 'dark' ? 'bg-[#1e1e1e] text-white border-gray-800' : 'bg-white text-black'}`} 
+          className={`w-80 p-4 ${currentTheme === 'dark' ? 'bg-[#1e1e1e] text-white border-gray-800' : 'bg-white text-black'}`} 
           align="end"
           side="top"
         >
@@ -110,7 +110,7 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
                     variant={"outline"}
                     className={`w-full justify-start text-left font-normal ${
                       !date && "text-muted-foreground"
-                    } ${theme === 'dark' ? 'bg-[#2d2d2d] text-white border-gray-700' : 'bg-white text-black'}`}
+                    } ${currentTheme === 'dark' ? 'bg-[#2d2d2d] text-white border-gray-700' : 'bg-white text-black'}`}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {date ? format(date, "PPP") : "Pick a date"}
@@ -134,7 +134,7 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className={`w-full justify-start ${theme === 'dark' ? 'bg-[#2d2d2d] text-white border-gray-700' : 'bg-white text-black'}`}
+                    className={`w-full justify-start ${currentTheme === 'dark' ? 'bg-[#2d2d2d] text-white border-gray-700' : 'bg-white text-black'}`}
                   >
                     {time || "Select a time"}
                   </Button>
@@ -156,14 +156,14 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
                 <Button
                   variant={notificationMethod === 'email' ? 'default' : 'outline'}
                   onClick={() => setNotificationMethod('email')}
-                  className={theme === 'dark' ? 'border-gray-700' : ''}
+                  className={currentTheme === 'dark' ? 'border-gray-700' : ''}
                 >
                   Email
                 </Button>
                 <Button
                   variant={notificationMethod === 'text' ? 'default' : 'outline'}
                   onClick={() => setNotificationMethod('text')}
-                  className={theme === 'dark' ? 'border-gray-700' : ''}
+                  className={currentTheme === 'dark' ? 'border-gray-700' : ''}
                 >
                   Text Message
                 </Button>
@@ -181,7 +181,7 @@ export const SchedulerComponent: React.FC<SchedulerComponentProps> = ({ theme })
                 placeholder={notificationMethod === 'email' ? 'you@example.com' : '+1 (555) 000-0000'}
                 value={contactInfo}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setContactInfo(e.target.value)}
-                className={theme === 'dark' ? 'bg-[#2d2d2d] text-white border-gray-700' : 'bg-white text-black'}
+                className={currentTheme === 'dark' ? 'bg-[#2d2d2d] text-white border-gray-700' : 'bg-white text-black'}
               />
             </div>
 
