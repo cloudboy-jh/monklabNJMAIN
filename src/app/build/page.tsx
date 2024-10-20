@@ -25,7 +25,7 @@ function BuildPage() {
 
   return (
     <div
-      className={`w-full min-h-screen flex flex-col ${theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100'} transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className={`w-full min-h-screen flex flex-col bg-background text-foreground transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
     >
       <main className="flex-1 flex flex-col items-center justify-start p-4 sm:p-6 md:p-8">
         <TechStackSelector 
@@ -33,7 +33,7 @@ function BuildPage() {
           onBuildStart={handleBuildStart}
         />
       </main>
-      <SchedulerComponent />
+      <SchedulerComponent theme={theme} />
     </div>
   );
 }
