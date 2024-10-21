@@ -7,6 +7,7 @@ import { ThemeProvider } from 'next-themes'
 import { SidebarComponent } from "@/components/components-sidebar";
 import Header from "@/components/ui/Header";
 import Image from "next/image";
+import Head from 'next/head'; // Import Head for managing <head> content
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,12 +37,16 @@ export default function RootLayout({
   };
 
   const onRestartChat = () => {
-    // Implement the restart chat functionality here
     console.log("Restarting chat...");
   };
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        {/* Use the favicon.ico from the public folder */}
+        <link rel="icon" href="/favicon.ico" />
+        <title>MonkLab</title>
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
