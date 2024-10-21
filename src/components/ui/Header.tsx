@@ -10,10 +10,9 @@ import FloatingDock from './floatingdoc';
 interface HeaderProps {
   toggleSidebar: () => void;
   isSidebarOpen: boolean;
-  onRestartChat: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen, onRestartChat }) => {
+const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
   const { theme } = useTheme();
 
   return (
@@ -27,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen, onRestart
         {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </Button>
       <div className="absolute left-1/2 top-[60%] transform -translate-x-1/2 -translate-y-1/2">
-        <FloatingDock onRestartChat={onRestartChat} />
+        <FloatingDock />
       </div>
       <div className="z-10">
         <ThemeToggle />

@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTheme } from "next-themes";
-import { Home, Wrench, RefreshCw, Settings } from 'lucide-react';
+import { Home, Wrench, Settings } from 'lucide-react';
 import BrainAndCogIcon from '../../assets/brainandcog.svg';
 
-interface FloatingDockProps {
-  onRestartChat: () => void;
-}
-
-export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
+export default function FloatingDock() {
   const { theme, systemTheme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState<string | undefined>(undefined);
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
@@ -21,7 +17,6 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
   const dockItems = [
     { icon: Home, label: "Home", href: "/" },
     { icon: Wrench, label: "Build", href: "/build" },
-    { icon: RefreshCw, label: "Restart Chat", href: "#", onClick: onRestartChat },
     { icon: Settings, label: "Settings", href: "/settings" },
   ];
 
@@ -41,25 +36,14 @@ export default function FloatingDock({ onRestartChat }: FloatingDockProps) {
         </button>
         <div className={`flex overflow-hidden transition-all duration-500 ease-in-out ${isDrawerOpen ? 'max-w-xs' : 'max-w-0'}`}>
           {dockItems.map((item, index) => (
-            item.onClick ? (
+            <Link key={index} href={item.href} passHref>
               <button
-                key={index}
-                onClick={item.onClick}
                 className={buttonClasses}
                 aria-label={item.label}
               >
                 <item.icon className="w-6 h-6" />
               </button>
-            ) : (
-              <Link key={index} href={item.href} passHref>
-                <button
-                  className={buttonClasses}
-                  aria-label={item.label}
-                >
-                  <item.icon className="w-6 h-6" />
-                </button>
-              </Link>
-            )
+            </Link>
           ))}
         </div>
       </div>

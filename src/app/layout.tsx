@@ -36,14 +36,9 @@ export default function RootLayout({
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const onRestartChat = () => {
-    console.log("Restarting chat...");
-  };
-
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>
-        {/* Use the favicon.ico from the public folder */}
         <link rel="icon" href="/favicon.ico" />
         <title>MonkLab</title>
       </Head>
@@ -67,7 +62,6 @@ export default function RootLayout({
               <Header 
                 toggleSidebar={toggleSidebar}
                 isSidebarOpen={isSidebarOpen}
-                onRestartChat={onRestartChat}
               />
               <div className="flex flex-1 overflow-hidden">
                 <SidebarComponent isOpen={isSidebarOpen} />
