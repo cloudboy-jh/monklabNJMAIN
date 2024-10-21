@@ -3,7 +3,8 @@
 import React, { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, Layout, Beaker, Hammer, BookOpen, Settings, FolderOpen, PlusCircle, FileCode, Users, Link } from "lucide-react"
+import { ChevronDown, Beaker, Wrench, BookOpen, Settings, FolderOpen, PlusCircle, FileCode, Users, Link, Home } from "lucide-react"
+import { useRouter } from 'next/navigation'
 
 interface SidebarComponentProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface SidebarComponentProps {
 
 export function SidebarComponent({ isOpen }: SidebarComponentProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <div className={`flex h-screen ${isOpen ? 'w-64' : 'w-0'} transition-all duration-300 ease-in-out overflow-hidden`}>
@@ -45,17 +47,17 @@ export function SidebarComponent({ isOpen }: SidebarComponentProps) {
           <div>
             <h3 className="px-4 text-sm font-medium text-muted-foreground">Platform</h3>
             <div className="space-y-1">
-              <Button variant="ghost" className="w-full justify-start">
-                <Layout className="mr-2 h-4 w-4" />
-                Dashboard
+              <Button variant="ghost" className="w-full justify-start" onClick={() => router.push('/')}>
+                <Home className="mr-2 h-4 w-4" />
+                Home
               </Button>
               <Button variant="ghost" className="w-full justify-start">
                 <Beaker className="mr-2 h-4 w-4" />
                 Playground
               </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                <Hammer className="mr-2 h-4 w-4" />
-                Build Center
+              <Button variant="ghost" className="w-full justify-start" onClick={() => router.push('/build')}>
+                <Wrench className="mr-2 h-4 w-4" />
+                Build
               </Button>
               <Button variant="ghost" className="w-full justify-start">
                 <BookOpen className="mr-2 h-4 w-4" />
