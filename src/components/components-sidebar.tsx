@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Layout, Beaker, Hammer, BookOpen, Settings, FolderOpen, PlusCircle, FileCode, Users, Link } from "lucide-react"
 
 interface SidebarComponentProps {
   isOpen: boolean;
@@ -46,23 +46,23 @@ export function SidebarComponent({ isOpen }: SidebarComponentProps) {
             <h3 className="px-4 text-sm font-medium text-muted-foreground">Platform</h3>
             <div className="space-y-1">
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">💻</span>
+                <Layout className="mr-2 h-4 w-4" />
                 Dashboard
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">🧪</span>
+                <Beaker className="mr-2 h-4 w-4" />
                 Playground
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">🔨</span>
+                <Hammer className="mr-2 h-4 w-4" />
                 Build Center
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">📚</span>
+                <BookOpen className="mr-2 h-4 w-4" />
                 Documentation
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">⚙️</span>
+                <Settings className="mr-2 h-4 w-4" />
                 Settings
               </Button>
             </div>
@@ -71,23 +71,23 @@ export function SidebarComponent({ isOpen }: SidebarComponentProps) {
             <h3 className="px-4 text-sm font-medium text-muted-foreground">Projects</h3>
             <div className="space-y-1">
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">🗂️</span>
+                <FolderOpen className="mr-2 h-4 w-4" />
                 Your Projects
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">🆕</span>
+                <PlusCircle className="mr-2 h-4 w-4" />
                 Create New Project
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">🛠️</span>
+                <FileCode className="mr-2 h-4 w-4" />
                 Templates
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">👥</span>
+                <Users className="mr-2 h-4 w-4" />
                 Collaborations
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <span className="mr-2 text-xl">🔗</span>
+                <Link className="mr-2 h-4 w-4" />
                 Integrations
               </Button>
             </div>
